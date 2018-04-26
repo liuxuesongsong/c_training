@@ -19,7 +19,6 @@ import { NOTICE,DATA_TYPE_BASE, UPDATE_COMPANY, DATA_TYPE_ADMIN, UPDATE_ADMIN,ED
 import Code from '../../../code';
 import Lang from '../../../language';
 import CommonAlert from '../../../components/CommonAlert';
-import document from '../../org/document';
 class Admin extends Component {
     state = {
         gotData: false,

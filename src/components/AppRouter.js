@@ -19,12 +19,12 @@ import Students from '../pages/com/students/students.page.js';
 import Exams from '../pages/com/exams/exams.page.js';
 import Infos from '../pages/com/infos/info.page.js';
 
-import Document from '../pages/org/document';
-import OrganizationHome from '../pages/org/home';
-import Area from '../pages/org/area';
-import Score from '../pages/org/score';
-import Clazz from '../pages/org/clazz';
-import Student from '../pages/org/student';
+// import Document from '../pages/org/document';
+// import OrganizationHome from '../pages/org/home';
+// import Area from '../pages/org/area';
+// import Score from '../pages/org/score';
+// import Clazz from '../pages/org/clazz';
+// import Student from '../pages/org/student';
 
 import Lang from '../language';
 import { getData, getRouter, getCity } from '../utils/helpers';
@@ -75,105 +75,7 @@ var AppRouter = {
       /> */}
     </Route>
 
-  </Router>),
-  2: (<Router history={browserHistory} render={applyRouterMiddleware(useScroll())}>
-    <Route title="Training" path="/" component={AppFrame}>
-      <IndexRoute dockDrawer title={titleize(Lang[window.Lang].pages.org.home.title)} nav component={OrganizationHome} />
-
-
-      <Route
-        title={titleize(Lang[window.Lang].pages.org.home.title)}
-        path={'/org/home'}
-        content={OrganizationHome}
-        nav
-        component={OrganizationHome}
-      />
-      <Route
-        title={titleize(Lang[window.Lang].pages.org.student.title)}
-        path={'/org/student'}
-        content={Student}
-        nav
-        component={Student}
-      />
-      <Route
-        title={titleize(Lang[window.Lang].pages.org.clazz.title)}
-        path={'/org/clazz'}
-        content={Clazz}
-        nav
-        component={Clazz}
-      />
-      <Route
-        title={titleize(Lang[window.Lang].pages.org.area.title)}
-        path={'/org/area'}
-        content={Area}
-        nav
-        component={Area}
-      />
-       <Route
-        title={titleize(Lang[window.Lang].pages.org.document.title)}
-        path={'/org/document'}
-        content={Document}
-        nav
-        component={Document}
-      />
-    </Route>
   </Router>)
-  // 3: (roles, obj) => {
-  //   var o = (
-  //     <Router history={browserHistory} render={applyRouterMiddleware(useScroll())}>
-  //       <Route key="org" title="Training" path="/" component={AppFrame}>
-  //         <IndexRoute dockDrawer title={titleize(Lang[window.Lang].pages.org.home.title)} nav component={OrganizationHome} />
-  //         {
-  //           roles.map(
-  //             role => {
-  //               console.log(role)
-  //               return obj[role];
-  //             }
-  //           )
-  //         }
-  //       </Route>
-  //     </Router>);
-  //   return o;
-  // },
-  // 4:
-  //   {
-  //     1: (
-  //       <Route key="org1"
-  //         title={titleize(Lang[window.Lang].pages.org.home.title)}
-  //         path={'/org/home'}
-  //         content={OrganizationHome}
-  //         nav
-  //         component={OrganizationHome}
-  //       />
-  //     ),
-  //     2: (
-  //       <Route key="org2"
-  //         title={titleize(Lang[window.Lang].pages.org.student.title)}
-  //         path={'/org/student'}
-  //         content={Student}
-  //         nav
-  //         component={Student}
-  //       />
-  //     ),
-  //     3: (
-  //       <Route key="org3"
-  //         title={titleize(Lang[window.Lang].pages.org.clazz.title)}
-  //         path={'/org/clazz'}
-  //         content={Clazz}
-  //         nav
-  //         component={Clazz}
-  //       />
-  //     ),
-  //     4: (
-  //       <Route key="org4"
-  //         title={titleize(Lang[window.Lang].pages.org.area.title)}
-  //         path={'/org/area'}
-  //         content={Area}
-  //         nav
-  //         component={Area}
-  //       />
-  //     )
-  //   }
 
 }
 

@@ -41,7 +41,7 @@ import Lang from '../language';
 import Code from '../code';
 import config from '../config';
 import { initCache, getData, getRouter, getCache } from '../utils/helpers';
-import { APP_TYPE_COMPANY, CHECK_CODE, APP_TYPE_ORANIZATION, APP_TYPE_UNLOGIN, NOTICE, LOGIN, ORG_LOGIN, REGISTER_COMPANY, CHECK_AVAILABLE,CHECK_CODE_PASSWORD,REGISTER_CHECKCODE,REGISTER_NEW } from '../enum';
+import { APP_TYPE_COMPANY, CHECK_CODE, APP_TYPE_UNLOGIN, NOTICE, LOGIN, ORG_LOGIN, REGISTER_COMPANY, CHECK_AVAILABLE,CHECK_CODE_PASSWORD,REGISTER_CHECKCODE,REGISTER_NEW } from '../enum';
 
 import Base from '../pages/com/infos/base.paper'
 import Express from '../pages/com/infos/express.paper'
@@ -201,11 +201,6 @@ class AppFrame extends Component {
             this.context.router.push("/com/home");
           }
           break;
-        case APP_TYPE_ORANIZATION:
-          if (window.location.pathname === "/") {
-            this.context.router.push("/org/home");
-          }
-          break;
       }
 
     }
@@ -268,18 +263,6 @@ class AppFrame extends Component {
           unavailable: true,
           available_result: message.msg
         })
-        // if (message.code === 0) {
-        //   this.setState({
-        //     unavailable: false,
-        //     available_result: Lang[window.Lang].pages.com.home.available
-        //   })
-        // } else {
-        //   this.setState({
-        //     unavailable: true,
-        //     available_result: Lang[window.Lang].ErrorCode[message.code]
-        //   })
-        // }
-        // 名字已经被占用，需要重新起一个有特色的名字
       }
 
     }
@@ -317,9 +300,6 @@ class AppFrame extends Component {
       case APP_TYPE_COMPANY:
         this.context.router.push("/com/home");
         break;
-      case APP_TYPE_ORANIZATION:
-        this.context.router.push("/org/home");
-        break;
     }
   }
 
@@ -336,8 +316,6 @@ class AppFrame extends Component {
         sessionStorage.session = message.data.session;
         sessionStorage.apptype = arg["type"];
         this.login_success(Number(arg["type"]));
-        console.log(sessionStorage)
-        // this.popUpNotice(NOTICE, message.code, Lang[window.Lang].pages.main.login_success);
       } else {
         this.popUpNotice(NOTICE, 0, message.msg);
       }
@@ -347,11 +325,7 @@ class AppFrame extends Component {
     if (window.type === 1) {
       apptype = APP_TYPE_COMPANY;
       getData(getRouter(LOGIN), { account: account, password: password, type: 0, checkcode: check_code }, cb, { account: account, type: apptype });
-    } else if (window.type === 2) {
-      apptype = APP_TYPE_ORANIZATION;
-      getData(getRouter(ORG_LOGIN), { account: account, password: password, type: 1, checkcode: check_code }, cb, { account: account, type: apptype });
-    }
-    // { account: account, password: password, type: apptype }
+    } 
   }
 
   register_check_button=()=>{
@@ -722,10 +696,7 @@ class AppFrame extends Component {
                   apptype = APP_TYPE_COMPANY;
                   console.log(this.state.name)
                   getData(getRouter("login_sendcode"), { account: this.state.name}, cb, {});
-                } else if (window.type === 2) {
-                  apptype = APP_TYPE_ORANIZATION;
-                 // getData(getRouter("send_code"), { account: this.state.name, type: 1}, cb, {});
-                }
+                } 
   
               }
               
@@ -784,12 +755,7 @@ class AppFrame extends Component {
               console.log("0000");
               apptype = APP_TYPE_COMPANY;
               getData(getRouter("login_telcode"), { account: name, code: this.state.phone_code }, cb, { account: name, type: apptype });
-            } else if (window.type === 2) {
-              console.log("11111");
-              apptype = APP_TYPE_ORANIZATION;
-              getData(getRouter(CHECK_CODE_PASSWORD), { account: name, type: 1,  code: this.state.phone_code}, cb, { account: name, type: apptype });
-            }
-             
+            } 
             }}
           >
             {"登录"}
@@ -969,7 +935,7 @@ style={{
         <div className={'nyx-login-window'}>
 
 
-          {window.type === 1 ?
+         
             <div>
               <AppBar position="static" color="default">
                 <Tabs
@@ -1007,10 +973,7 @@ style={{
               <a href="http://www.csst.com.cn/uploadfile/doc/csi-Q&A.pdf" target="view_window" className="nyx-instructions">常见问题与回答<i className="glyphicon glyphicon-question-sign nyx-instructions-glyphicon"></i></a>
               <a href="http://www.csst.com.cn/uploadfile/doc/csi-01.pdf" target="view_window" className="nyx-instructions">填报说明<i className="glyphicon glyphicon-info-sign nyx-instructions-glyphicon"></i></a>
               </div>
-            </div> : 
-                <TabContainer>
-                  {this.LoginView()}
-                </TabContainer>}
+            </div> 
         </div>
       </div>
     </div>

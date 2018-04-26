@@ -5,7 +5,7 @@ const webpack = require('webpack');
 const webpackBaseConfig = require('./webpackBaseConfig');
 const dllManifest = require('./build/dll.manifest.json');
 
-const PORT = process.env.MATERIAL_UI_PORT || 8805;
+const PORT = process.env.MATERIAL_UI_PORT || 8806;
 
 module.exports = Object.assign({}, webpackBaseConfig, {
   cache: true,
