@@ -185,6 +185,12 @@ const Language = {
                     unarrange: "待安排培训报名列表",
                     arranged: "已安排培训报名列表",
                 },
+                resit: {
+                    title: "补考报名管理",
+                    unenrolled: "报名人员信息及管理",
+                    unarrange: "待安排培训报名列表",
+                    arranged: "已安排培训报名列表",
+                },
                 instructions: {
                     title: "填报说明"
                 },

@@ -59,7 +59,8 @@ class Info extends Component {
             duty: "",
             wechat: "",
             c_area_id: null,
-            c_level: null
+            c_level: null,
+            c_level_co:null
         },
         finance: {
             allname: "公司名称未设置",
@@ -198,8 +199,28 @@ class Info extends Component {
             financial_call=this.state.finance["financial_call"],
             opening_bank=this.state.finance["opening_bank"],
             taxpayer_number=this.state.finance["taxpayer_number"];
-        
-        var obj = {
+            var obj = {
+                c_name: account === "" ? null : account,
+                name: name === "" ? null : name,
+                mobile: mobile === "" ? null : mobile,
+                tel: tel === "" ? null : tel,
+                mail: mail === "" ? null : mail,
+                department: department === "" ? null : department,
+                duty: duty === "" ? null : duty,
+                wechat: wechat === "" ? null : wechat,
+                "c_area_id": c_area_id === "" ? null : Number(c_area_id),
+                "c_level": c_level === "" ? null : Number(c_level),
+                receiver: receiver === "" ? null : receiver,
+                district: district === "" ? null : district,
+                receive_phone: receive_phone === "" ? null : receive_phone,
+                zip_code: zip_code === "" ? null : zip_code,
+                taxpayer_number: taxpayer_number === "" ? null : taxpayer_number,
+                opening_bank: opening_bank === "" ? null : opening_bank,
+                bank_account: bank_account === "" ? null : bank_account,
+                c_address: c_address === "" ? null : c_address,
+                financial_call: financial_call === "" ? null : financial_call,
+            }
+        var obj_co = {
             c_name: account === "" ? null : account,
             name: name === "" ? null : name,
             mobile: mobile === "" ? null : mobile,
@@ -209,7 +230,7 @@ class Info extends Component {
             duty: duty === "" ? null : duty,
             wechat: wechat === "" ? null : wechat,
             "c_area_id": c_area_id === "" ? null : Number(c_area_id),
-            "c_level": c_level === "" ? null : Number(c_level),
+            "c_level_co": c_level === "" ? null : Number(c_level),
             receiver: receiver === "" ? null : receiver,
             district: district === "" ? null : district,
             receive_phone: receive_phone === "" ? null : receive_phone,
@@ -221,9 +242,10 @@ class Info extends Component {
             financial_call: financial_call === "" ? null : financial_call,
         }
         getData(getRouter(UPDATE_COMPANY), {
-            session: sessionStorage.session, company: obj
+            session: sessionStorage.session, company: sessionStorage.classify==1?obj:obj_co
         }, cb, { self: this, data: obj });
     }
+    
 
     toggleDrawer = (open) => () => {
         this.setState({
@@ -632,9 +654,12 @@ class Info extends Component {
                                 className="nyx-info-select-lg"
                                 id="input_c_level"
                                 label={"企业资质等级"}
-                                value={this.state.base.c_level === null ? "" : this.state.base.c_level}
+                                value={this.state.base.c_level === null ? "" : sessionStorage.classify==1?this.state.base.c_level:this.state.base.c_level_co}
                                 onChange={(e) => {
+                                   // {sessionStorage.classify==1?this.state.base["c_level"] = Number(e.target.value):this.state.base["c_level_co"] = Number(e.target.value)}
                                     this.state.base["c_level"] = Number(e.target.value);
+                                    this.state.base["c_level_co"] = Number(e.target.value);
+                                    
                                     this.setState({
                                         base: this.state.base
                                     });
@@ -644,7 +669,7 @@ class Info extends Component {
                                 <option value={1}>{"1级"}</option>
                                 <option value={2}>{"2级"}</option>
                                 <option value={3}>{"3级"}</option>
-                                <option value={4}>{"4级"}</option>
+                                {sessionStorage.classify==1?<option value={4}>{"4级"}</option>:""}
                                 <option value={5}>{"无等级"}</option>
                             </select>
                             </div>

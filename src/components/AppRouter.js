@@ -11,21 +11,15 @@ import Home from 'training/src/pages/Home';
 // import { componentAPIs, requireMarkdown, demos, requireDemo } from 'training/src/components/files';
 
 import Enrolled from '../pages/com/enrolled/enrolled.page.js';
-
+import Enrolled_Comp from '../pages/com/enrolled/enrolled_comp.page.js';
 //import Instructions from '../pages/com/instructions/instructions.page.js';
 import Password from '../pages/com/infos/admin.paper.js';
 import CompanyHome from '../pages/com/home/home.page.js';
+//import CompanyHomeComp from '../pages/com/home/home-comp.page.js';
 import Students from '../pages/com/students/students.page.js';
 import Exams from '../pages/com/exams/exams.page.js';
+import Resit from '../pages/com/resit/resit.page.js';
 import Infos from '../pages/com/infos/info.page.js';
-
-// import Document from '../pages/org/document';
-// import OrganizationHome from '../pages/org/home';
-// import Area from '../pages/org/area';
-// import Score from '../pages/org/score';
-// import Clazz from '../pages/org/clazz';
-// import Student from '../pages/org/student';
-
 import Lang from '../language';
 import { getData, getRouter, getCity } from '../utils/helpers';
 
@@ -37,13 +31,14 @@ var AppRouter = {
   1: (<Router history={browserHistory} render={applyRouterMiddleware(useScroll())}>
     <Route title="Training" path="/" component={AppFrame} >
       <IndexRoute dockDrawer title={titleize(Lang[window.Lang].pages.com.home.title)} nav component={CompanyHome} />
+     
       <Route
         title={titleize(Lang[window.Lang].pages.com.home.title)}
         path={'/com/home'}
         content={CompanyHome}
         nav
         component={CompanyHome}
-      />
+      /> 
       <Route
         title={titleize(Lang[window.Lang].pages.com.infos.title)}
         path={'/com/infos'}
@@ -51,14 +46,27 @@ var AppRouter = {
         nav
         component={Infos}
       />
-
-      <Route
+      {sessionStorage.classify==1?<Route
         title={titleize(Lang[window.Lang].pages.com.enrolled.title)}
         path={'/com/enrolled'}
         content={Enrolled}
         nav
         component={Enrolled}
-      />
+      />:<Route
+      title={titleize(Lang[window.Lang].pages.com.enrolled.title)}
+      path={'/com/enrolled_comp'}
+      content={Enrolled_Comp}
+      nav
+      component={Enrolled_Comp}
+    />}
+      {sessionStorage.classify==1?<Route
+        title={titleize(Lang[window.Lang].pages.com.resit.title)}
+        path={'/com/resit'}
+        content={Resit}
+        nav
+        component={Resit}
+      />:""}
+      
       <Route
         title={titleize(Lang[window.Lang].pages.com.infos.admin.account_info)}
         path={'/com/password'}
@@ -66,13 +74,6 @@ var AppRouter = {
         nav
         component={Password}
       />
-      {/* <Route
-        title={titleize(Lang[window.Lang].pages.com.instructions.title)}
-        path={'/com/instructions'}
-        content={Instructions}
-        nav
-        component={Instructions}
-      /> */}
     </Route>
 
   </Router>)

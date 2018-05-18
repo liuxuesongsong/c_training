@@ -37,15 +37,9 @@ const styleSheet = createStyleSheet('AppDrawer', theme => ({
 
 function renderNavItems(props, navRoot) {
   let navItems = null;
-
   if (navRoot.childRoutes && navRoot.childRoutes.length) {
     // eslint-disable-next-line no-use-before-define
     navItems = navRoot.childRoutes.reduce(reduceChildRoutes.bind(null, props), []);
-    if(window.type==2){
-      for (var i in navRoot.childRoutes){
-       sessionStorage.modules_id.indexOf(++i)!=-1? "":delete(navItems[--i])
-      }
-    }
   }
 
   return (
@@ -113,7 +107,7 @@ function AppDrawer(props) {
       >
       {sessionStorage.getItem("apptype") === APP_TYPE_COMPANY.toString() ? <a className="nyx_instruction_pdf nyx_instruction_pdf_big" style={{width:"100%"}} title="自学资料" href="http://www.csst.com.cn/uploadfile/doc/details.rar" target="view_window"><i className="glyphicon glyphicon-list-alt"></i><p className="nyx_instruction_p">自学资料</p></a> : ""}
       {sessionStorage.getItem("apptype") === APP_TYPE_COMPANY.toString() ? <a className="nyx_instruction_pdf"  title="填报说明" href="http://www.csst.com.cn/uploadfile/doc/csi-01.pdf" target="view_window"><i className="glyphicon glyphicon-info-sign"></i><p className="nyx_instruction_p">填报说明</p></a> : ""}
-      {sessionStorage.getItem("apptype") === APP_TYPE_COMPANY.toString() ? <a className="nyx_instruction_pdf"  title="常见问题与回答" href="http://www.csst.com.cn/uploadfile/doc/csi-Q&A.pdf" target="view_window"><i className="glyphicon glyphicon-question-sign"></i><p className="nyx_instruction_p">Q&A</p></a> : ""}
+      {sessionStorage.getItem("apptype") === APP_TYPE_COMPANY.toString() ? <a className="nyx_instruction_pdf"  title="常见问题与回答" href="http://www.csst.com.cn/uploadfile/doc/csi-Q&Av2.pdf" target="view_window"><i className="glyphicon glyphicon-question-sign"></i><p className="nyx_instruction_p">Q&A</p></a> : ""}
       
       
       </div>

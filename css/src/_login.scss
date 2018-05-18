@@ -132,7 +132,127 @@ $btn-size:64px;
     top: 0.15rem;
     margin-left: 0.3rem;
 }
+.nyx-login-style{
+    width: 100%;
+    background-color:#0d47a1;
+    height: 100%;
+    top: 0;
+    bottom: 0;
+    position: absolute;
+    }
+.nyx-login-select{
+    width: 960px;
+    margin: auto;
+    height: 200px;
+}
+
+.nyx-login-select-title{
+    font-size: 36px;
+    color: #fff;
+    padding-left: 200px;
+    line-height: 200px;
+  }
+.nyx-login-select_list{
+    list-style: none;
+    padding-left: 270px;
+    li{
+        color: #fff;
+        line-height: 1.5
+    }
+    span{
+        color: #4aa8ae;
+        font-size: 18px;
+        margin-right: 10px;
+        line-height: 1.5
+    }
+   }
+   .nyx-login-select_v{
+    color: #4aa8ae;
+    font-size: 14px;
+    line-height: 1.5;
+    float: right;   
+    width: 240px;
+    padding-top: 80px;
+  }
+  .nyx-login-select-button{
+  float: right;
+  margin-top: 10px;
+    width: 300px;
+    height: 150px;
+    font-size: 30px;
+    color: #fff;
+    border-left: 7px solid #fff;
+    padding-left: 30px;
+    padding-top: 10px;
+    line-height: 1.5;
+    cursor: pointer;
+    margin-right: 45px;
+  }
+  .nyx-login-select-button span{
+    display: block;
+  }
+  .nyx-login-select-img{
+    width: 30px;
+    height: 30px;
+    float: right;
+    margin-right: 5px;
+    background-image: url("../images/1-04.png")
+  }
+  .nyx-login-select-button:hover{
+    background-color: #4aa8ae;
+  }
+  .nyx-login-select-button:hover .nyx-login-select-img{
+   background-image: url("../images/1-03.png")
+   
+   
+ }
 @media only screen and (max-width:960px ){
+    .nyx-login-style{
+        width: 100%;
+        background-color:#0d47a1;
+        height: 120%;
+        top: 0;
+        bottom: 0;
+        position: absolute;
+        }
+      .nyx-login-select{
+        width: 100%;
+        margin: auto;
+        height: 130px;
+      }
+      .nyx-login-select-log{
+        float: left;
+        padding-top: 37px;
+        margin-left: 30px;
+        width: 75px;
+        height:97.8px;
+      }
+      .nyx-login-select-title{
+        font-size: 24px;
+        color: #fff;
+        padding-left: 120px;
+        line-height: 1.5;
+        padding-top: 35px;
+      }
+      .nyx-login-select_list{
+        list-style: none;
+        padding-left: 120px;
+       }
+       .nyx-login-select_v{
+        color: #4aa8ae;
+        font-size: 14px;
+        line-height: 1.5;
+        float: right; 
+        padding-left:50px;   
+        width: 240px;
+        padding-top: 80px;
+      }
+      .nyx-training_title {
+        font-size: 14px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
     .nyx-training_title{
         font-size: 14px;
         overflow: hidden;

@@ -74,7 +74,7 @@ const Style = {
 	paper: { margin: 10, width: 400, float: "left" }
 }
 
-class Enrolled extends Component {
+class Enrolled_Comp extends Component {
 	state = {
 		course: "0",
 		course_id: "",
@@ -155,6 +155,30 @@ class Enrolled extends Component {
 			});
 		}
 	}
+	getAreas_co = () => {
+	    var components = []
+	  var markers = [];
+	  markers[13]="安徽省";
+	   markers[1]="北京市";
+	   markers[14]="福建省";
+	   markers[20]="广东省(无深圳)";
+	   markers[18]="湖北省";
+	   markers[11]="江苏省";
+	   markers[8]="辽宁省";
+	   markers[16]="山东省";
+	   markers[27]="陕西省";
+	   markers[3]="上海市";
+	   markers[36]="深圳市";
+	   markers[23]="四川省";
+	   markers[25]="云南省";
+	   markers[12]="浙江省";
+	   for(var key in markers){
+            components.push(
+			<option value={key}>{ markers[key]}</option>	
+			)
+		};
+       return components
+    }
 	resit_student = (id) => {
 		var cb = (route, message, arg) => {
 			if (message.code === Code.LOGIC_SUCCESS) {
@@ -162,7 +186,6 @@ class Enrolled extends Component {
 			}
 			this.popUpNotice(NOTICE, 0, message.msg);
 		}
-		console.log(id)
 		getData(getRouter(RESIT_REG), { session: sessionStorage.session, user_ids: id }, cb, { });
 	}
 	cancelResitStudent = (id) => {
@@ -177,7 +200,8 @@ class Enrolled extends Component {
 	}
    //运维修改
 	updateStudents = () => {
-		console.log(this.state.cancel_students)
+		
+		//console.log(this.state.cancel_students)
 		let fkStudents = [], newStudents = [], unarragedStudents = [], arrangedStudents = [],unarrageResits = [],arrageResits = [], newStudents_comp = [], unarragedStudents_comp = [], arrangedStudents_comp = [],unarrageResits_comp = [],arrageResits_comp = [];;
 		for (var i = 0; i < this.state.students.length; i++) {
 			if (this.state.students[i].is_inlist == STATUS_FK_UNDO) {
@@ -590,7 +614,7 @@ class Enrolled extends Component {
 			}}
 			>
 			<option value={1}>{"临时登记编号"}</option>
-			<option value={2}>{"培训考试报名"}</option>
+			{/* <option value={2}>{"培训考试报名"}</option> */}
 			<option value={3}>{"空"}</option>
 			</select>
 			</div>
@@ -623,22 +647,17 @@ class Enrolled extends Component {
 			<div className="nyx-info-select-div">
 			<p className="nyx-info-select-label">课程名称</p>
 			{/* 运维修改 */}
-			{sessionStorage.classify==1?
+			{sessionStorage.classify==2?
 			<select
+            style={{borderBottom:"1px dashed"}}
 			className="nyx-info-select-lg"
-			id="new_course_id"
-			label={Lang[window.Lang].pages.org.clazz.info.area}
-			>
-			<option key={1} value={1}>项目经理</option>
-			<option key={2} value={2}>高级项目经理</option>
-			</select>:<select
-			className="nyx-info-select-lg"
-			id="new_course_id"
+            id="new_course_id"
+            disabled={true}
 			label={Lang[window.Lang].pages.org.clazz.info.area}
 			>
 			<option key={3} value={3}>运维项目经理</option>
-			<option key={4} value={4}>运维高级项目经理</option>
-			</select>
+			{/* <option key={4} value={4}>运维高级项目经理</option> */}
+			</select>:""
 			}
 			{/* 运维修改 */}
 			{/* <select
@@ -666,9 +685,11 @@ class Enrolled extends Component {
 			}}
 			label={Lang[window.Lang].pages.org.clazz.info.area}
 			>
-			 {getAreas().map(area => {
+			
+			{this.getAreas_co()}
+			 {/* {getAreas().map(area => {
                                     return <option key={area.id} value={area.id}>{area.area_name}</option>
-                                })}
+                                })} */}
 			</select>
 			</div>
 			<TextField
@@ -709,6 +730,27 @@ class Enrolled extends Component {
 			id={"new_identity_card"}
 			label={Lang[window.Lang].pages.com.students.input.identity_card}
 			/>
+			<div style={{float:"left"}} className="nyx-info-select-div">
+			<p className="nyx-info-select-label">项目经理情况</p>
+			<select
+			className="nyx-info-select-lg"
+			id="new_id_type"
+			onChange={(e)=>{
+               if(e.target.value==2){
+				this.popUpNotice(ALERT, 0, "未登记项目经理/高级项目经理人员需要先报名参加项目经理培训", [
+					() => {
+					this.closeNotice();
+					}, () => {
+					this.closeNotice();
+					}]);
+			   }
+			}}
+			label={Lang[window.Lang].pages.org.clazz.info.area}
+			>
+			<option value={"1"}>{"已登记项目经理/高级项目经理"}</option>
+			<option value={"2"}>{"未登记"}</option>
+			</select>
+			</div>
 			<TextField
 			className="nyx-form-div"
 			key={"department"}
@@ -727,12 +769,13 @@ class Enrolled extends Component {
 			id={"new_wechat"}
 			label={Lang[window.Lang].pages.com.students.input.wechat}
 			/>
-			<div className="nyx-remark">
+			
+			{/* <div className="nyx-remark">
 			<h4>备注栏:</h4>
 			<p>1.临时登记人员填写临时登记证书编号(网站可查);</p>
 			<p>2.原来在项目管理人员登记系统已报名培训考试填写培训考试报名;</p>
 			<p>3.不是上述两种情况,备注栏目为空,不用填写。</p>
-			</div>
+			</div> */}
 			</div>
 			</DialogContent>
 			<DialogActions>
@@ -876,6 +919,7 @@ class Enrolled extends Component {
 					this.toggleDrawer(true)()
 					}, () => {
 					var info_completed=getCache("info_completed");
+					
 					var info_completed_per=info_completed/20;
 					console.log(info_completed_per);
 					if(info_completed_per<1){
@@ -1025,7 +1069,7 @@ class Enrolled extends Component {
 				// console.log(getCache("info_completed"));
 				var info_completed=getCache("info_completed");
 				var info_completed_per=info_completed/20;
-				console.log(info_completed_per);
+				console.log(info_completed);
 				if(info_completed_per<1){
 				this.popUpNotice("alert", 0, '企业相关信息完成'+info_completed_per*100+'%, 请先补全企业相关信息');
 				return
@@ -1492,24 +1536,16 @@ this.closeNotice();
 			课程名称
 			</p>
 			{/* 运维修改 */}
-			{sessionStorage.classify==1?
+			{sessionStorage.classify==2?
 			<select
 			className={this.state.selected.a_id == -1 ?"nyx-card-enrroll-select-lg-dashed":"nyx-card-enrroll-select-lg"}
 			id={"student_course_id"}
 			defaultValue={this.state.selected.course_id ? this.state.selected.course_id : ""}
-			disabled={this.state.selected.a_id == -1 ? true : false}
-			>
-		      <option key={1} value={1}>项目经理</option>
-			  <option key={2} value={2}>高级项目经理</option>
-			</select>:<select
-			className={this.state.selected.a_id == -1 ?"nyx-card-enrroll-select-lg-dashed":"nyx-card-enrroll-select-lg"}
-			id={"student_course_id"}
-			defaultValue={this.state.selected.course_id ? this.state.selected.course_id : ""}
-			disabled={this.state.selected.a_id == -1 ? true : false}
+			disabled={true}
 			>
 		      <option key={3} value={3}>运维项目经理</option>
-			  <option key={4} value={4}>高级运维项目经理</option>
-			</select>}
+			  {/* <option key={4} value={4}>高级运维项目经理</option> */}
+			</select>:""}
 			{/* 运维修改 */}
 			{/* <select
 			className={this.state.selected.a_id == -1 ?"nyx-card-enrroll-select-lg-dashed":"nyx-card-enrroll-select-lg"}
@@ -1528,7 +1564,7 @@ this.closeNotice();
 			defaultValue={this.state.selected.area_id === null ? "" : this.state.selected.area_id}
 			label={Lang[window.Lang].pages.org.clazz.info.area}
 			>
-			{this.newStudentCity()}
+			{this.getAreas_co()}
 			</select>
 
 			{/* <FormControl required>
@@ -1790,4 +1826,4 @@ type="checkbox"/>
 				}
 			}
 
-export default Enrolled;
+export default Enrolled_Comp;

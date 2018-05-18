@@ -157,6 +157,7 @@ class AppFrame extends Component {
     code_img_url: "",
     image: "",
     register_phone_number:"",
+    classify:0,
     activeStep: 0,
     index: 0,
     count:60,
@@ -198,6 +199,7 @@ class AppFrame extends Component {
       switch (Number(sessionStorage.apptype)) {
         case APP_TYPE_COMPANY:
           if (window.location.pathname === "/") {
+            //运维修改
             this.context.router.push("/com/home");
           }
           break;
@@ -285,8 +287,12 @@ class AppFrame extends Component {
         sessionStorage.accent = arg.account;
         sessionStorage.apptype = 1;
         sessionStorage.logged = true;
+        //运维修改
+        
+        sessionStorage.classify=0;
         this.popUpNotice(NOTICE, 0, Lang[window.Lang].pages.main.login_success);
-        this.context.router.push("/com/home");
+       //运维修改
+       // this.context.router.push("/com/home");
       }
       this.popUpNotice(NOTICE, 0, message.msg);
     }
@@ -298,7 +304,8 @@ class AppFrame extends Component {
     this.popUpNotice(NOTICE, 0, Lang[window.Lang].pages.main.login_success);
     switch (type) {
       case APP_TYPE_COMPANY:
-        this.context.router.push("/com/home");
+      //运维修改
+       // this.context.router.push("/com/home");
         break;
     }
   }
@@ -309,8 +316,10 @@ class AppFrame extends Component {
       // Code.LOGIC_SUCCESS
       if (message.code === Code.LOGIC_SUCCESS) {
       //  debugger;
-        console.log(message.data.session);
+      //  console.log(message.data.session);
         sessionStorage.logged = true;
+        //运维修改
+        sessionStorage.classify=0;
         sessionStorage.modules_id = message.data.modules_id;
         sessionStorage.account = arg["account"];
         sessionStorage.session = message.data.session;
@@ -970,7 +979,7 @@ style={{
                 <div className="nyx-login-window-acctention">
                   系统维护电话：010-51527580
               </div>
-              <a href="http://www.csst.com.cn/uploadfile/doc/csi-Q&A.pdf" target="view_window" className="nyx-instructions">常见问题与回答<i className="glyphicon glyphicon-question-sign nyx-instructions-glyphicon"></i></a>
+              <a href="http://www.csst.com.cn/uploadfile/doc/csi-Q&Av2.pdf" target="view_window" className="nyx-instructions">常见问题与回答<i className="glyphicon glyphicon-question-sign nyx-instructions-glyphicon"></i></a>
               <a href="http://www.csst.com.cn/uploadfile/doc/csi-01.pdf" target="view_window" className="nyx-instructions">填报说明<i className="glyphicon glyphicon-info-sign nyx-instructions-glyphicon"></i></a>
               </div>
             </div> 
@@ -1002,51 +1011,153 @@ style={{
     return (
       <div className="nyx">
         {sessionStorage.getItem("logged") === "true" ?
-          <div className={classes.appFrame}>
-            <AppBar className={appBarClassName + ' nyx-topbar'}>
-              <Toolbar>
-                <IconButton
-                  color="contrast"
-                  onClick={this.handleDrawerToggle}
-                  className={navIconClassName}
-                >
-                  <MenuIcon />
-                </IconButton>
-                {title !== null &&
-                  <Typography className={classes.title} type="title" color="inherit" noWrap>
-                    {title}
-                  </Typography>}
-                <div className={classes.grow} />
-                <h2 className="nyx-training_title" style={{ float: "right" }}>{"信息系统集成及服务项目管理人员培训报名系统"}</h2>
-                <IconButton
-                title="刷新数据"
-                  color="contrast"
-                  onClick={() => {
-                    window.currentPage.fresh();
-                  }}>
-                  <i className="glyphicon glyphicon-refresh"></i>
-                </IconButton><IconButton
-                title="退出登录"
-                  color="contrast"
-                  onClick={() => {
+       //运维修改
+         sessionStorage.classify==0?<div className="nyx-login-style">
+           <div className="nyx-login-select">
+             <img className="nyx-login-select-log" src="../images/logo-02.png"/>
+             <div className="nyx-login-select-title">系统集成项目管理人员学习平台</div>
+           </div>
+           <div className="nyx-login-select">
+            <ul className="nyx-login-select_list">
+              <li><span>01.</span>填写企业信息</li>
+              <li><span>02.</span>填写培训报名信息</li>
+              <li><span>03.</span>报名进入待安排列表</li>
+              <li><span>04.</span>参加培训</li>
+            </ul>
+           </div>
+           <div className="nyx-login-select">
+           <div
+          className="nyx-login-select-button"
+          style={{paddingLeft:0}}
+          onClick={()=>{
+            sessionStorage.classify=2;
+            this.context.router.push("/com/home");
+            location.reload();
+          }}><span style={{lineHeight:"90px",textAlign:"center"}}>
+            运维项目经理
+            </span>
+            <span style={{fontSize:"18px",float:"right",lineHeight:"30px",paddingLeft:"30px"}}>报名入口<div className="nyx-login-select-img"></div></span>
+            
+          </div>
+           <div
+           className="nyx-login-select-button"
+           
+           onClick={()=>{
+           sessionStorage.classify=1;
+           this.context.router.push("/com/home");
+           location.reload();
+          // this.fresh();
+          }}>
+          <span style={{lineHeight:"90px",textAlign:"center"}}>
+          项目经理
+          </span>
+          
+         <span style={{fontSize:"18px",float:"right",lineHeight:"30px"}}>报名入口<div className="nyx-login-select-img"></div></span>
+          
+          </div>
+          
+          <div className="nyx-login-select_v">
+             版本编号:V1.083<br/>
+             开发自:<br/>
+             项目管理培训工作组<br/>
+             系统维护电话:
+           </div>
+           </div>
+           <div style={{clear:"both"}}></div>
+        </div>:sessionStorage.classify==1?<div className={classes.appFrame}>
+       {/* //运维修改 */}
+        {/* <div className={classes.appFrame}> */}
+       <AppBar className={appBarClassName + ' nyx-topbar'}>
+        <Toolbar>
+        <IconButton
+        color="contrast"
+        onClick={this.handleDrawerToggle}
+        className={navIconClassName}
+        >
+        <MenuIcon />
+        </IconButton>
+        {title !== null &&
+        <Typography className={classes.title} type="title" color="inherit" noWrap>
+        {title}
+        </Typography>}
+        <div className={classes.grow} />
+        <h2 className="nyx-training_title" style={{ float: "right" }}>{"信息系统集成及服务项目管理人员培训报名系统"}</h2>
+        <IconButton
+        title="刷新数据"
+        color="contrast"
+        onClick={() => {
+        window.currentPage.fresh();
+        }}>
+        <i className="glyphicon glyphicon-refresh"></i>
+        </IconButton><IconButton
+        title="退出登录"
+        color="contrast"
+        onClick={() => {
 
-                    this.logout()
-                  }}>
-                  <i className="glyphicon glyphicon-log-out"></i>
-                </IconButton>
+        this.logout()
+        }}>
+        <i className="glyphicon glyphicon-log-out"></i>
+        </IconButton>
+        {/* //运维修改 */}
+        </Toolbar>
+        </AppBar>
+        <AppDrawer
+        className={classes.drawer + ' nyx-sidebar'}
+        docked={drawerDocked}
+        routes={routes}
+        onRequestClose={this.handleDrawerClose}
+        open={sessionStorage.getItem("logged") === "true" ? (drawerDocked || this.state.drawerOpen) : false}
+        />
+        {children}
+        </div>:
+        <div className={classes.appFrame}>
+        <AppBar className={appBarClassName + ' nyx-topbar'}>
+        <Toolbar>
+        <IconButton
+        color="contrast"
+        onClick={this.handleDrawerToggle}
+        className={navIconClassName}
+        >
+        <MenuIcon />
+        </IconButton>
+        {title !== null &&
+        <Typography className={classes.title} type="title" color="inherit" noWrap>
+        {title}
+        </Typography>}
+        <div className={classes.grow} />
+        <h2 className="nyx-training_title" style={{ float: "right" }}>{"运维项目管理人员培训报名系统"}</h2>
+        <IconButton
+        title="刷新数据"
+        color="contrast"
+        onClick={() => {
+        window.currentPage.fresh();
+        }}>
+        <i className="glyphicon glyphicon-refresh"></i>
+        </IconButton><IconButton
+        title="退出登录"
+        color="contrast"
+        onClick={() => {
 
+        this.logout()
+        }}>
+        <i className="glyphicon glyphicon-log-out"></i>
+        </IconButton>
 
-              </Toolbar>
-            </AppBar>
-            <AppDrawer
-              className={classes.drawer + ' nyx-sidebar'}
-              docked={drawerDocked}
-              routes={routes}
-              onRequestClose={this.handleDrawerClose}
-              open={sessionStorage.getItem("logged") === "true" ? (drawerDocked || this.state.drawerOpen) : false}
-            />
-            {children}
-          </div> : this.LoginTable()}
+        </Toolbar>
+        </AppBar>
+        <AppDrawer
+        className={classes.drawer + ' nyx-sidebar'}
+        docked={drawerDocked}
+        routes={routes}
+        onRequestClose={this.handleDrawerClose}
+        open={sessionStorage.getItem("logged") === "true" ? (drawerDocked || this.state.drawerOpen) : false}
+        />
+        {children}
+        </div>
+
+          : this.LoginTable()}
+         
+          
         <CommonAlert
           show={this.state.alertOpen}
           type={this.state.alertType}

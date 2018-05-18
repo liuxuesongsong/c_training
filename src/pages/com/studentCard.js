@@ -12,6 +12,7 @@ import {
   CARD_TYPE_FK,
   CARD_TYPE_ENROLL,
   CARD_TYPE_ARRANGE,
+  CARD_TYPE_RESIT,
   CARD_TYPE_EXAM,
   CARD_TYPE_UNARRANGE,
   CARD_TYPE_UNARRANGE_ING,
@@ -104,6 +105,19 @@ class ComCard extends Component {
             }
           </CardActions>
         );
+        case CARD_TYPE_RESIT:
+        return (
+          <CardActions style={{ height: '1.5rem',paddingRight:0 }}>
+            {this.state.status === '' ?
+              (
+                <button className="nyx-card-button" onClick={this.props.action[0]}>
+                  报名
+                    </button>
+              ) :
+              (Lang[window.Lang].pages.com.card.status[1])
+            }
+          </CardActions>
+        );
       case CARD_TYPE_KNOW:
         return (
           <CardActions style={{ height: '1.5rem' }}>
@@ -167,7 +181,7 @@ class ComCard extends Component {
   }
 
   render() {
-    const { type, name,department,duty, mobile, email, level, city, action, status, institution } = this.props;
+    const { type, name,department,duty, mobile, email, level, city, action, status, institution,is_inlist } = this.props;
 
     this.state.type = type;
     this.state.status = status;
@@ -195,7 +209,7 @@ class ComCard extends Component {
               <div className="nyx-card-second-info">
                 <div title={mobile} style={{width:"3.5rem"}} className={'nyx-card-value'}>{mobile}</div>
                 <div title={email} style={{width:"3.5rem"}} className={'nyx-card-value'}>{email}</div>
-                {institution !== 0 ? <div className={'nyx-card-value'}>{getInst(institution)}</div> : null}
+                {institution !== 0 ? is_inlist==1?null:<div className={'nyx-card-value'}>{getInst(institution)}</div> : null}
               </div>
             </div>
             <div className="nyx-card-action">{this.buttonActions()}</div>
