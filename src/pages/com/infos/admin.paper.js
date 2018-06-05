@@ -254,20 +254,25 @@ class Admin extends Component {
     }
     check_available = () => {
         var cb = (route, message, arg) => {
+            var account = this.state.change_company;
+                                    account=account.replace(/（/g,'(');  
+                                    account=account.replace(/ /g,''); 
+                                    account=account.replace(/）/g,')');  
            if(message.msg=="该名称已存在"){
             this.popUpNotice(NOTICE, 0, message.msg);
             return false
-           }else{
+           }else if(account==""){
+            this.popUpNotice(NOTICE, 0,"请输入有效的公司名称");
+            return false
+           }
+           else{
             this.company_submit();
             this.handleRequestClose()
            }
           
     
         }
-        var account = this.state.change_company;
-                                    account=account.replace(/（/g,'(');  
-                                    account=account.replace(/ /g,''); 
-                                    account=account.replace(/）/g,')');  
+        
         getData(getRouter(CHECK_AVAILABLE), { key: "account", value: account }, cb);
       }
     changeCompanyDialog = () => {
@@ -305,6 +310,7 @@ class Admin extends Component {
                     <div>
                         <Button
                             onClick={() => {
+                                this.state.change_company.replace(/ /g,'');
                                 //console.log(document.getElementById("change_company_com").value);
                                 if(this.state.change_company==""){
                                     return false

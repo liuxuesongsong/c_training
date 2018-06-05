@@ -157,7 +157,7 @@ class AppFrame extends Component {
     code_img_url: "",
     image: "",
     register_phone_number:"",
-    classify:0,
+    classify:1,
     activeStep: 0,
     index: 0,
     count:60,
@@ -289,10 +289,10 @@ class AppFrame extends Component {
         sessionStorage.logged = true;
         //运维修改
         
-        sessionStorage.classify=0;
+        sessionStorage.classify=1;
         this.popUpNotice(NOTICE, 0, Lang[window.Lang].pages.main.login_success);
        //运维修改
-       // this.context.router.push("/com/home");
+        this.context.router.push("/com/home");
       }
       this.popUpNotice(NOTICE, 0, message.msg);
     }
@@ -305,7 +305,7 @@ class AppFrame extends Component {
     switch (type) {
       case APP_TYPE_COMPANY:
       //运维修改
-       // this.context.router.push("/com/home");
+        this.context.router.push("/com/home");
         break;
     }
   }
@@ -319,7 +319,7 @@ class AppFrame extends Component {
       //  console.log(message.data.session);
         sessionStorage.logged = true;
         //运维修改
-        sessionStorage.classify=0;
+        sessionStorage.classify=1;
         sessionStorage.modules_id = message.data.modules_id;
         sessionStorage.account = arg["account"];
         sessionStorage.session = message.data.session;
@@ -743,6 +743,7 @@ class AppFrame extends Component {
               // Code.LOGIC_SUCCESS
               if (message.code === Code.LOGIC_SUCCESS) {
                 sessionStorage.logged = true;
+                sessionStorage.classify=1;
                 sessionStorage.account = arg["account"];
                 sessionStorage.session = message.data.session;
                 sessionStorage.apptype = arg["type"];
@@ -843,6 +844,7 @@ style={{
           <a 
            style={{color:"#2196f3",fontSize:"12px",cursor:"pointer"}}
             onClick={() => {
+              
               this.setState({
                 findPassword: true
               })
@@ -1014,7 +1016,7 @@ style={{
        //运维修改
          sessionStorage.classify==0?<div className="nyx-login-style">
            <div className="nyx-login-select">
-             <img className="nyx-login-select-log" src="../images/logo-02.png"/>
+             <img className="nyx-login-select-log" src="../css/img/logo-02.png"/>
              <div className="nyx-login-select-title">系统集成项目管理人员学习平台</div>
            </div>
            <div className="nyx-login-select">
@@ -1057,10 +1059,10 @@ style={{
           </div>
           
           <div className="nyx-login-select_v">
-             版本编号:V1.083<br/>
+             版本编号:V1.100<br/>
              开发自:<br/>
-             项目管理培训工作组<br/>
-             系统维护电话:
+             项目管理人员培训工作组<br/>
+             系统维护电话:<br/>010-51527580
            </div>
            </div>
            <div style={{clear:"both"}}></div>

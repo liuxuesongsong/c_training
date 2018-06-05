@@ -975,7 +975,20 @@ class Enrolled extends Component {
 			// console.log(getCache("info_completed"));
 			var info_completed=getCache("info_completed");
 			var info_completed_per=info_completed/20;
-			console.log(info_completed_per);
+			//console.log(info_completed_per);
+			//判断同一个人报过同一级别考试(还没有判断报名状态)
+
+			// var identity_card=student.identity_card.replace(/ /g,'');
+			// for(var i = 0;i<this.state.students.length;i++){
+			// 	//console.log(this.state.students[i].identity_card)
+
+			// 	if(this.state.students[i].identity_card.replace(/ /g,'')==identity_card&&this.state.students[i].course_id==student.course_id){
+			// 		console.log(student.identity_card)
+			// this.popUpNotice("alert", 0, '该人员已报过相关级别考试');
+			// return
+			// 	}
+			// }
+			
 			if(info_completed_per<1){
 			this.popUpNotice("alert", 0, '企业相关信息完成'+info_completed_per*100+'%, 请先补全企业相关信息');
 			return
@@ -1036,6 +1049,7 @@ class Enrolled extends Component {
 				return
 				}
 				this.state.selectedStudentId = student.id;
+				console.log("报名按钮")
 				this.popUpNotice(ALERT, 0, "为" + student.name + "报名"+ getCity(student.area_id) + "的"+getCourse(student.course_id)+ "培训班", [
 				() => {
 				this.erollStudent(student.id);

@@ -210,7 +210,7 @@ $btn-size:64px;
     .nyx-login-style{
         width: 100%;
         background-color:#0d47a1;
-        height: 120%;
+        height: 130%;
         top: 0;
         bottom: 0;
         position: absolute;
@@ -225,17 +225,18 @@ $btn-size:64px;
         padding-top: 37px;
         margin-left: 30px;
         width: 75px;
-        height:97.8px;
+        height:100px;
       }
       .nyx-login-select-title{
-        font-size: 24px;
+        font-size: 30px;
         color: #fff;
         padding-left: 120px;
         line-height: 1.5;
-        padding-top: 35px;
+        padding-top: 20px;
       }
       .nyx-login-select_list{
         list-style: none;
+        padding-top: 50px;
         padding-left: 120px;
        }
        .nyx-login-select_v{
@@ -245,7 +246,7 @@ $btn-size:64px;
         float: right; 
         padding-left:50px;   
         width: 240px;
-        padding-top: 80px;
+        padding-top: 40px;
       }
       .nyx-training_title {
         font-size: 14px;

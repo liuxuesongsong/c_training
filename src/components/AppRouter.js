@@ -46,7 +46,22 @@ var AppRouter = {
         nav
         component={Infos}
       />
-      {sessionStorage.classify==1?<Route
+      {/* 运维修改 */}
+      <Route
+        title={titleize(Lang[window.Lang].pages.com.enrolled.title)}
+        path={'/com/enrolled'}
+        content={Enrolled}
+        nav
+        component={Enrolled}
+      />
+      <Route
+        title={titleize(Lang[window.Lang].pages.com.resit.title)}
+        path={'/com/resit'}
+        content={Resit}
+        nav
+        component={Resit}
+      />
+      {/* {sessionStorage.classify==1?<Route
         title={titleize(Lang[window.Lang].pages.com.enrolled.title)}
         path={'/com/enrolled'}
         content={Enrolled}
@@ -58,14 +73,14 @@ var AppRouter = {
       content={Enrolled_Comp}
       nav
       component={Enrolled_Comp}
-    />}
-      {sessionStorage.classify==1?<Route
+    />} */}
+      {/* {sessionStorage.classify==1?<Route
         title={titleize(Lang[window.Lang].pages.com.resit.title)}
         path={'/com/resit'}
         content={Resit}
         nav
         component={Resit}
-      />:""}
+      />:""} */}
       
       <Route
         title={titleize(Lang[window.Lang].pages.com.infos.admin.account_info)}
