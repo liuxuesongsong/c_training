@@ -653,7 +653,7 @@ case "3":
 	style={{marginLeft:"1.2rem",height:"18px"}}>
   <p title={getCity(message.area_id)} className="nyx-message-hidden" style={{width:"2.5rem"}}>{getCity(message.area_id)}</p> 
   <p title={getCourse(message.course_id)} className="nyx-message-hidden" style={{width:"3.2rem"}}>{getCourse(message.course_id)}</p>
-  <p  className="nyx-message-hidden" style={{width:"10rem"}}> 培训,已累计3次,请重新报名</p>
+  <p  className="nyx-message-hidden" style={{width:"10rem"}}> 培训,已累计2次,请重新报名</p>
 	</div>
 	<div 
 	style={{marginLeft:"1.2rem"}}>
@@ -943,7 +943,7 @@ case "6":
 		style={{marginLeft:"1.2rem",height:"18px"}}>
 	  <p title={getCity(message.area_id)} className="nyx-message-hidden" style={{width:"2.5rem"}}>{getCity(message.area_id)}</p> 
 	  <p title={getCourse(message.course_id)} className="nyx-message-hidden" style={{width:"3.2rem"}}>{getCourse(message.course_id)}</p>
-	  <p  className="nyx-message-hidden" style={{width:"10rem"}}> 培训,已累计3次,请重新报名</p>
+	  <p  className="nyx-message-hidden" style={{width:"10rem"}}> 培训,已累计2次,请重新报名</p>
 		</div>
 		<div 
 		style={{marginLeft:"1.2rem"}}>
