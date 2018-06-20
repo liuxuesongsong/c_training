@@ -423,6 +423,10 @@ class Enrolled extends Component {
 			this.popUpNotice(NOTICE, 0, message.msg);
 		}
 		var id = this.state.selected.id;
+		if(document.getElementById("licence.code").value==""){
+			this.popUpNotice(NOTICE, 0, "请输入身份证号码");
+			return;
+		}
 		var obj = {
 			name: document.getElementById("student_name").value,
 			identity_card: document.getElementById("licence.code").value,
@@ -477,7 +481,7 @@ class Enrolled extends Component {
 			<DialogTitle style={{padding:"24px 0"}}>
 			系统正在排班，是否继续取消{this.state.cancel_student_name}报名？
 			</DialogTitle>
-			<p style={{margin:"0",fontSize:"14px",lineHeight:"1.5"}}>为了企业能更快的参加培训，使报名系统中人员更加准确，减少企业不必要的沟通成本，在【待安排列表中】已显示分配到培训机构时，培训机构即将会跟企业联系安排培训事宜，企业如再取消报名，将会有90天锁定期，如有特殊情况可以跟培训机构联系，进行退回。</p>
+			<p style={{margin:"0",fontSize:"14px",lineHeight:"1.5"}}>为了企业能更快的参加培训，使报名系统中人员更加准确，减少企业不必要的沟通成本，在【待安排列表中】已显示分配到培训机构时，培训机构即将会跟企业联系安排培训事宜，企业如再取消报名，<span style={{color:"red"}}>将会有90天锁定期</span>，如有特殊情况可以跟培训机构联系，进行退回。</p>
 			<TextField
 			style={{width:"100%",marginBottom:"2rem",marginTop:"0.5rem"}}
 			className="nyx-clazz-message"
@@ -1617,6 +1621,8 @@ this.closeNotice();
 			<Button
 			style={{backgroundColor:"#2196f3", color:"#FFF",margin: 10, float: "right" }}
 			onClick={(e) => {
+
+				console.log("queding")
 			this.modifyStudent(e)
 			}}>
 			{Lang[window.Lang].pages.main.certain_button}
