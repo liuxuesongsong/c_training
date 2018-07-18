@@ -292,6 +292,7 @@ class AppFrame extends Component {
         sessionStorage.classify=1;
         this.popUpNotice(NOTICE, 0, Lang[window.Lang].pages.main.login_success);
        //运维修改
+       console.log(this.context.router)
         this.context.router.push("/com/home");
       }
       this.popUpNotice(NOTICE, 0, message.msg);
@@ -848,7 +849,7 @@ style={{
               this.setState({
                 findPassword: true
               })
-            }}>{"短息验证码登录?"}</a> : ""}
+            }}>{"短信验证码登录?"}</a> : ""}
 
          
           
@@ -943,10 +944,9 @@ style={{
   LoginTable = () => {
     return <div className={'nyx-login-bg'}>
       <div className={'nyx-login'}>
+      {/* <h1 style={{color:"#fff"}}>信息系统集成及项目管理人员,系统正在维护中。(维护时间:2018.06.21 18:00-2018.06.22 06:30)</h1>
+       */}
         <div className={'nyx-login-window'}>
-
-
-         
             <div>
               <AppBar position="static" color="default">
                 <Tabs
@@ -958,8 +958,9 @@ style={{
                 >
                   <Tab label="公司登录" />
                   <Tab label="公司注册" />
-                  {/* <Tab label="机构登陆" /> */}
+                 
                 </Tabs>
+                
               </AppBar>
               <SwipeableViews index={this.state.index} onChangeIndex={this.handleChangeIndex}>
 
@@ -986,6 +987,7 @@ style={{
               </div>
             </div> 
         </div>
+
       </div>
     </div>
   }
@@ -1046,6 +1048,7 @@ style={{
            
            onClick={()=>{
            sessionStorage.classify=1;
+           console.log(this.context.router)
            this.context.router.push("/com/home");
            location.reload();
           // this.fresh();

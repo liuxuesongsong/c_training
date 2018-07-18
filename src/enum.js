@@ -154,7 +154,7 @@ export const CHECK_IDENTITY_CARD = 'check_identity_card';//检查补考人员身
 export const COMPLETION_RESITINFO = 'completion_resitinfo';//补考人员身信息补充
 //export const DEL_RESIT = 'del_resit';//删除补考人员
 //export const AGREE_RESIT = 'agree_resit';//同意补考人员
-
+export const AUTHENTICATE_ID_CARD = 'authenticate_id_card';
 //export const ADMIN_ADD = 'admin_add';
 //export const ADMIN_DEL = 'admin_del';
 //export const ADMIN_EDIT = 'admin_edit';

@@ -63,7 +63,7 @@ import {
 	CARD_TYPE_KNOW,
 	CLASS_INFO,
 	APPLY_CANCEL,
-	RECALL_CANCEL,RESIT_REG,RECALL_RESIT,RESIT_CLASSINFO
+	RECALL_CANCEL,RESIT_REG,RECALL_RESIT,RESIT_CLASSINFO,AUTHENTICATE_ID_CARD
 } from '../../../enum';
 import Lang from '../../../language';
 import Code from '../../../code';
@@ -154,6 +154,15 @@ class Enrolled extends Component {
 				c_area_id: data.c_area_id,
 			});
 		}
+	}
+	authenticate_id_card=()=>{
+		var cb = (route, message, arg) => {
+			if (message.code === Code.LOGIC_SUCCESS) {
+
+			}
+			this.popUpNotice(NOTICE, 0, message.msg);
+		}
+		getData(getRouter(AUTHENTICATE_ID_CARD), { session: sessionStorage.session,identity_card:document.getElementById("new_identity_card").value }, cb, { });
 	}
 	resit_student = (id) => {
 		var cb = (route, message, arg) => {
@@ -432,7 +441,7 @@ class Enrolled extends Component {
 			identity_card: document.getElementById("licence.code").value,
 			course_id:document.getElementById("student_course_id").value,
 			area_id:document.getElementById("new_area_id").value,
-			register: document.getElementById("register").value,
+			//register: document.getElementById("register").value,
 			department: document.getElementById("department").value,
 			duty: document.getElementById("duty").value,
 			mobile: document.getElementById("mobile").value,
@@ -575,7 +584,14 @@ class Enrolled extends Component {
 			id={"new_name"}
 			label={Lang[window.Lang].pages.com.students.input.name}
 			/>
-			<div className="nyx-form-div">
+			<TextField
+			className="nyx-form-div nyx-must-content"
+			key={"mobile"}
+			id={"new_mobile"}
+			label={Lang[window.Lang].pages.com.students.input.mobile}
+			defaultValue={""}
+			/>
+			{/* <div className="nyx-form-div">
 			<div style={{width:"50%",float:"left",marginTop:"1px"}} className="nyx-info-select-div">
 			<p className="nyx-info-select-label">{Lang[window.Lang].pages.com.students.input.register}</p>
 			<select
@@ -605,7 +621,7 @@ class Enrolled extends Component {
 			disabled={this.state.is_register == 3||this.state.is_register == 2 ? true : false}
 			/>
 
-			</div>
+			</div> */}
 			
 			{/* <select
 			className="nyx-info-select"
@@ -675,20 +691,8 @@ class Enrolled extends Component {
                                 })}
 			</select>
 			</div>
-			<TextField
-			className="nyx-form-div nyx-must-content"
-			key={"mobile"}
-			id={"new_mobile"}
-			label={Lang[window.Lang].pages.com.students.input.mobile}
-			defaultValue={""}
-			/>
-			<TextField
-			className="nyx-form-div nyx-must-content"
-			key={"mail"}
-			id={"new_mail"}
-			label={Lang[window.Lang].pages.com.students.input.mail}
-			defaultValue={""}
-			/>
+			
+			
 			<div style={{float:"left"}} className="nyx-info-select-div">
 			<p className="nyx-info-select-label">证件类型</p>
 			<select
@@ -713,6 +717,24 @@ class Enrolled extends Component {
 			id={"new_identity_card"}
 			label={Lang[window.Lang].pages.com.students.input.identity_card}
 			/>
+			<span
+			onClick={() => {
+				if(document.getElementById("new_identity_card").value==""){
+					this.popUpNotice(NOTICE, 0, "请输入身份证号码")
+					return false
+				}
+				
+				
+				this.authenticate_id_card()
+			}}
+			style={{position:"absolute",marginTop:"2rem",right:"38px",fontSize:"10px",color:"#2196f3",cursor:"pointer"}}>身份证效验</span>
+			<TextField
+			className="nyx-form-div nyx-must-content"
+			key={"mail"}
+			id={"new_mail"}
+			label={Lang[window.Lang].pages.com.students.input.mail}
+			defaultValue={""}
+			/>
 			<TextField
 			className="nyx-form-div"
 			key={"department"}
@@ -731,12 +753,12 @@ class Enrolled extends Component {
 			id={"new_wechat"}
 			label={Lang[window.Lang].pages.com.students.input.wechat}
 			/>
-			<div className="nyx-remark">
+			{/* <div className="nyx-remark">
 			<h4>备注栏:</h4>
 			<p>1.临时登记人员填写临时登记证书编号(网站可查);</p>
 			<p>2.原来在项目管理人员登记系统已报名培训考试填写培训考试报名;</p>
 			<p>3.不是上述两种情况,备注栏目为空,不用填写。</p>
-			</div>
+			</div> */}
 			</div>
 			</DialogContent>
 			<DialogActions>
@@ -763,7 +785,7 @@ class Enrolled extends Component {
 			wechat: document.getElementById("new_wechat").value,
 			id_type: document.getElementById("new_id_type").value,
 			identity_card: document.getElementById("new_identity_card").value,
-			register: document.getElementById("new_register").value,
+			//register: document.getElementById("new_register").value,
 			area_id: document.getElementById("new_area_id").value,
 			course_id: document.getElementById("new_course_id").value
 			})
@@ -840,13 +862,14 @@ class Enrolled extends Component {
 		return (
 			<div style={{width:"800px"}} className={'nyx-page'}>
 				{/* 运维修改 */}
-				{sessionStorage.classify==1?<div>
-					<div className={'nyx-tips nyx-display-none'}><p>{"【已临时登记的项目经理】" +
+				{sessionStorage.classify==1?
+				<div>
+					{/* <div className={'nyx-tips nyx-display-none'}><p>{"【已临时登记的项目经理】" +
 				"第一步：请在下表中点击【修改】补充完整人员信息。" +
 				"第二步：点击【报名】进行培训报名"}</p>
 				<p style={{marginLeft:"0.4rem"}}>{"特别提醒:在“报名”提交前必须填完“企业相关信息”。"}</p>
-				</div>
-				<Paper className={'nyx-paper nyx-enroller-paper'}>
+				</div> */}
+				{/* <Paper className={'nyx-paper nyx-enroller-paper'}>
 				<List style={{ padding: 0 }}>
 				<div style={{  color:"#2196F3", marginBottom: "1rem", position: "relative" }} className="nyx-head-name">
 				{"已临时登记的报名人员信息及管理"} <i
@@ -914,14 +937,14 @@ class Enrolled extends Component {
 					)}
 					</div>
 			</List>
-			</Paper>
-			<div className={'nyx-tips nyx-display-none'}>
+			</Paper> */}
+			{/* <div className={'nyx-tips nyx-display-none'}>
 			{"【未临时登记的项目经理】" +
 			"第一步：请在下表中点击【添加】新增人员，输入完整信息。" +
 			"第二步：点击【报名】进行报名"
 			}
 			<p style={{marginLeft:"0.4rem"}}>{"特别提醒:在“报名”提交前必须填完“企业相关信息”。"}</p>
-			</div>
+			</div> */}
 			{/* 运维修改 */}
 				</div>:""}
 			<Paper className={'nyx-paper nyx-enroller-paper'}>
@@ -1564,14 +1587,14 @@ this.closeNotice();
 			<LabelRadio value={"2"} label="高级项目经理" />
 			</RadioGroup>
 			</FormControl> */}
-			<TextField
+			{/* <TextField
 			style={{marginTop:"1em"}}
 			id="register"
 			label={Lang[window.Lang].pages.com.students.register}
 			defaultValue={this.state.selected.register ? this.state.selected.register : ""}
 			disabled={this.state.selected.a_id == -1 ? true : false}
 			fullWidth>
-			</TextField>
+			</TextField> */}
 
 			<h2 className="nyx-enrolled-change-title" style={{marginTop:20}}>
 			{Lang[window.Lang].pages.com.students.personal_info.title}

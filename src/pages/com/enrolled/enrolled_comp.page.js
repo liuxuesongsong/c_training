@@ -63,7 +63,7 @@ import {
 	CARD_TYPE_KNOW,
 	CLASS_INFO,
 	APPLY_CANCEL,
-	RECALL_CANCEL,RESIT_REG,RECALL_RESIT,RESIT_CLASSINFO
+	RECALL_CANCEL,RESIT_REG,RECALL_RESIT,RESIT_CLASSINFO,AUTHENTICATE_ID_CARD
 } from '../../../enum';
 import Lang from '../../../language';
 import Code from '../../../code';
@@ -178,7 +178,16 @@ class Enrolled_Comp extends Component {
 			)
 		};
        return components
-    }
+	}
+	authenticate_id_card=()=>{
+		var cb = (route, message, arg) => {
+			if (message.code === Code.LOGIC_SUCCESS) {
+
+			}
+			this.popUpNotice(NOTICE, 0, message.msg);
+		}
+		getData(getRouter(AUTHENTICATE_ID_CARD), { session: sessionStorage.session,identity_card:document.getElementById("new_identity_card").value }, cb, { });
+	}
 	resit_student = (id) => {
 		var cb = (route, message, arg) => {
 			if (message.code === Code.LOGIC_SUCCESS) {
@@ -730,6 +739,17 @@ class Enrolled_Comp extends Component {
 			id={"new_identity_card"}
 			label={Lang[window.Lang].pages.com.students.input.identity_card}
 			/>
+			<span
+			onClick={() => {
+				if(document.getElementById("new_identity_card").value==""){
+					this.popUpNotice(NOTICE, 0, "请输入身份证号码")
+					return false
+				}
+				
+				
+				this.authenticate_id_card()
+			}}
+			style={{position:"absolute",marginTop:"2rem",right:"38px",fontSize:"10px",color:"#2196f3",cursor:"pointer"}}>身份证效验</span>
 			<div style={{float:"left"}} className="nyx-info-select-div">
 			<p className="nyx-info-select-label">项目经理情况</p>
 			<select
