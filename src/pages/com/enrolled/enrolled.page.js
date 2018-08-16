@@ -686,6 +686,7 @@ class Enrolled extends Component {
 			}}
 			label={Lang[window.Lang].pages.org.clazz.info.area}
 			>
+			
 			 {getAreas().map(area => {
                                     return <option key={area.id} value={area.id}>{area.area_name}</option>
                                 })}
@@ -1027,7 +1028,22 @@ class Enrolled extends Component {
 			return
 			}
 			this.state.selectedStudentId = student.id;
-			this.popUpNotice(ALERT, 0, "为" + student.name + "报名"+ getCity(student.area_id) + "的"+getCourse(student.course_id)+ "培训班", [
+			this.popUpNotice(ALERT, 0, <div>
+				<div style={{textAlign:"center",fontWeight:"800",paddingBottom:"2rem",fontSize:"20px"}}>
+				为{student.name}报名{getCity(student.area_id)}的{getCourse(student.course_id)}培训班
+				</div>
+				<div style = {{color:"#2196F3"}}>
+               平台通知
+               </div>
+				<ul className="nyx-login-select_list_Dialog">
+					<li><span style = {{color:"#2196F3"}}>01.</span>{Lang[window.Lang].pages.main.notice_one}
+					<a style={{fontSize:"16px",color:"#2196F3"}} target="view_window" href="http://www.csi-s.org.cn/miitnew_webmap/miitnew_pmbzgf/2015/07/17/1778896c187945e08b3effb9fcd7bc76.html"> 查看原文</a></li>
+					<li><span style = {{color:"#2196F3"}}>02.</span>{Lang[window.Lang].pages.main.notice_two}</li>
+					<li><span style = {{color:"#2196F3"}}>03.</span>{Lang[window.Lang].pages.main.notice_three}</li>
+					<li><span style = {{color:"#2196F3"}}>04.</span>{Lang[window.Lang].pages.main.notice_four}</li>
+				</ul>
+
+			</div>, [
 			() => {
 			this.erollStudent(student.id);
 			this.closeNotice();
@@ -1569,7 +1585,10 @@ this.closeNotice();
 			defaultValue={this.state.selected.area_id === null ? "" : this.state.selected.area_id}
 			label={Lang[window.Lang].pages.org.clazz.info.area}
 			>
-			{this.newStudentCity()}
+			{/* {this.newStudentCity()} */}
+			{getAreas().map(area => {
+                                    return <option key={area.id} value={area.id}>{area.area_name}</option>
+                                })}
 			</select>
 
 			{/* <FormControl required>

@@ -26,7 +26,11 @@ const Language = {
                 next_step: "跳过",
                 pre_step: "上一步",
                 login_success: "登录成功",
-                register_success: "注册成功"
+                register_success: "注册成功",
+                notice_one:"报名培训人员需满足「项目管理人员登记管理办法」指定条件",
+                notice_two:"培训通过人员，需在一年内完成初始登记",
+                notice_three:"培训未通过人员，需在一年内完成补考（考试费:200元/人）",
+                notice_four:"已经补考一次未通过，需重新报名参加培训（费用8折）",
             },
             com: {
                 home: {

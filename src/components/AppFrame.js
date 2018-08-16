@@ -157,7 +157,7 @@ class AppFrame extends Component {
     code_img_url: "",
     image: "",
     register_phone_number:"",
-    classify:1,
+    classify:0,
     activeStep: 0,
     index: 0,
     count:60,
@@ -178,7 +178,7 @@ class AppFrame extends Component {
     register_password:"",
     register_repeat_password:"",
     beingLoading: false,
-
+    openloginNoticeDialog:false,
     // 提示状态
     alertOpen: false,
     alertType: NOTICE,
@@ -289,7 +289,10 @@ class AppFrame extends Component {
         sessionStorage.logged = true;
         //运维修改
         
-        sessionStorage.classify=1;
+        sessionStorage.classify=0;
+        if(localStorage.loginNotice!="已读"){
+          localStorage.loginNotice="未读";
+        }
         this.popUpNotice(NOTICE, 0, Lang[window.Lang].pages.main.login_success);
        //运维修改
        console.log(this.context.router)
@@ -320,7 +323,11 @@ class AppFrame extends Component {
       //  console.log(message.data.session);
         sessionStorage.logged = true;
         //运维修改
-        sessionStorage.classify=1;
+        sessionStorage.classify=0;
+        if(localStorage.loginNotice!="已读"){
+          localStorage.loginNotice="未读";
+        }
+        
         sessionStorage.modules_id = message.data.modules_id;
         sessionStorage.account = arg["account"];
         sessionStorage.session = message.data.session;
@@ -744,7 +751,10 @@ class AppFrame extends Component {
               // Code.LOGIC_SUCCESS
               if (message.code === Code.LOGIC_SUCCESS) {
                 sessionStorage.logged = true;
-                sessionStorage.classify=1;
+                sessionStorage.classify=0;
+                if(localStorage.loginNotice!="已读"){
+                  localStorage.loginNotice="未读";
+                }
                 sessionStorage.account = arg["account"];
                 sessionStorage.session = message.data.session;
                 sessionStorage.apptype = arg["type"];
@@ -940,7 +950,55 @@ style={{
       alertOpen: true,
     });
   }
-
+  handleRequestClose = () => {
+    this.setState({
+        openloginNoticeDialog:false,
+    })
+}
+  loginNoticeDialog = () => {
+    return (
+        <Dialog  open={this.state.openloginNoticeDialog} onRequestClose={this.handleRequestClose} >
+            <DialogTitle >
+               <div style = {{color:"rgba(0,0,0,0.54)"}}>
+               平台通知
+               </div>
+            </DialogTitle>
+            <DialogContent>
+            <ul className="nyx-login-select_list_Dialog">
+              <li><span>01.</span>{Lang[window.Lang].pages.main.notice_one}
+              <a style={{fontSize:"16px",color:"#4aa8ae"}} target="view_window" href="http://www.csi-s.org.cn/miitnew_webmap/miitnew_pmbzgf/2015/07/17/1778896c187945e08b3effb9fcd7bc76.html"> 查看原文</a></li>
+              <li><span>02.</span>{Lang[window.Lang].pages.main.notice_two}</li>
+              <li><span>03.</span>{Lang[window.Lang].pages.main.notice_three}</li>
+              <li><span>04.</span>{Lang[window.Lang].pages.main.notice_four}</li>
+            </ul>
+            </DialogContent>
+            <DialogActions>
+                <div>
+                    <Button
+                        onClick={() => {
+                          localStorage.loginNotice="已读";
+                            sessionStorage.classify=1;
+                            console.log(this.context.router+"确认平台通知")
+                            this.context.router.push("/com/home");
+                           location.reload();
+                            this.fresh();
+                            this.handleRequestClose()
+                        }}
+                    >
+                        {Lang[window.Lang].pages.main.certain_button}
+                    </Button>
+                    <Button
+                        onClick={() => {
+                            this.handleRequestClose()
+                        }}
+                    >
+                        {Lang[window.Lang].pages.main.cancel_button}
+                    </Button>
+                </div>
+            </DialogActions>
+        </Dialog >
+    )
+}
   LoginTable = () => {
     return <div className={'nyx-login-bg'}>
       <div className={'nyx-login'}>
@@ -1017,16 +1075,18 @@ style={{
         {sessionStorage.getItem("logged") === "true" ?
        //运维修改
          sessionStorage.classify==0?<div className="nyx-login-style">
-           <div className="nyx-login-select">
+           <div style={{height:"130px"}} className="nyx-login-select">
              <img className="nyx-login-select-log" src="../css/img/logo-02.png"/>
              <div className="nyx-login-select-title">系统集成项目管理人员学习平台</div>
            </div>
            <div className="nyx-login-select">
             <ul className="nyx-login-select_list">
-              <li><span>01.</span>填写企业信息</li>
-              <li><span>02.</span>填写培训报名信息</li>
-              <li><span>03.</span>报名进入待安排列表</li>
-              <li><span>04.</span>参加培训</li>
+              <li style={{fontSize:"24px",paddingBottom:"1rem"}}>平台通知</li>
+              <li><span>01.</span>{Lang[window.Lang].pages.main.notice_one}
+              <a style={{fontSize:"18px",color:"#4aa8ae"}} target="view_window" href="http://www.csi-s.org.cn/miitnew_webmap/miitnew_pmbzgf/2015/07/17/1778896c187945e08b3effb9fcd7bc76.html"> 查看原文</a></li>
+              <li><span>02.</span>{Lang[window.Lang].pages.main.notice_two}</li>
+              <li><span>03.</span>{Lang[window.Lang].pages.main.notice_three}</li>
+              <li><span>04.</span>{Lang[window.Lang].pages.main.notice_four}</li>
             </ul>
            </div>
            <div className="nyx-login-select">
@@ -1034,23 +1094,35 @@ style={{
           className="nyx-login-select-button"
           style={{paddingLeft:0}}
           onClick={()=>{
-            sessionStorage.classify=2;
-            this.context.router.push("/com/home");
-            location.reload();
+          //  sessionStorage.classify=2;
+          //   this.context.router.push("/com/home");
+            //location.reload();
           }}><span style={{lineHeight:"90px",textAlign:"center"}}>
             运维项目经理
             </span>
-            <span style={{fontSize:"18px",float:"right",lineHeight:"30px",paddingLeft:"30px"}}>报名入口<div className="nyx-login-select-img"></div></span>
+            <span style={{fontSize:"18px",float:"right",lineHeight:"30px",paddingLeft:"30px"}}>即将上线<div className="nyx-login-select-img"></div></span>
             
           </div>
            <div
            className="nyx-login-select-button"
            
            onClick={()=>{
-           sessionStorage.classify=1;
-           console.log(this.context.router)
-           this.context.router.push("/com/home");
-           location.reload();
+            console.log(localStorage.loginNotice)
+             if(localStorage.loginNotice==="未读"){
+              this.setState({
+                openloginNoticeDialog:true
+               })
+             }else{
+              sessionStorage.classify=1;
+              console.log(this.context.router)
+              this.context.router.push("/com/home");
+              location.reload();
+              this.fresh();
+             }
+          //  sessionStorage.classify=1;
+          //  console.log(this.context.router)
+          //  this.context.router.push("/com/home");
+          //  location.reload();
           // this.fresh();
           }}>
           <span style={{lineHeight:"90px",textAlign:"center"}}>
@@ -1062,7 +1134,7 @@ style={{
           </div>
           
           <div className="nyx-login-select_v">
-             版本编号:V1.100<br/>
+             版本编号:V1.200<br/>
              开发自:<br/>
              项目管理人员培训工作组<br/>
              系统维护电话:<br/>010-51527580
@@ -1162,7 +1234,7 @@ style={{
 
           : this.LoginTable()}
          
-          
+          {this.loginNoticeDialog()}
         <CommonAlert
           show={this.state.alertOpen}
           type={this.state.alertType}

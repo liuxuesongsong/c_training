@@ -82,6 +82,7 @@ export function getTimeString(timeStamp) {
  * @param {*} args 
  */
 export function getData(router, json, callback = null, args = {}) {
+  console.log(router.request)
   if (!isJson(json)) {
     console.log("request必须为json");
   }
@@ -280,7 +281,9 @@ export function companyRegex(id){
  * @param {*路由键} key 
  */
 export function getRouter(key) {
+  console.log(key)
   var router = JSON.parse(sessionStorage.getItem(key));
+  console.log(router)
   return router === null ? { url: config.routers } : router;
 }
 
