@@ -109,6 +109,15 @@ class Enrolled_Comp extends Component {
 		resitStudent_comp:[],
 		unarrageResits_comp:[],
 		arrageResits_comp:[],
+		graduation_time:"",
+		education:"",
+		time_istrue:0,
+		graduation_time:"",
+		time_label:"毕业时间",
+		notice_msg:"运维项目经理-博士毕业不少于1年",
+		notice_train_time:0,
+		SignUpStudent:[],
+		openSignUpDialog:false,
 		// 界面状态
 		selectedStudentId: undefined,
 		selected: {},
@@ -334,6 +343,7 @@ class Enrolled_Comp extends Component {
 			this.handleRequestClose()
 			this.popUpNotice(NOTICE, 0, message.msg);
 		}
+		
 		getData(getRouter(UNROLL_STUDENT), { session: sessionStorage.session, id: id }, cb, { id: id });
 	}
 	send_cancel() {
@@ -376,8 +386,8 @@ class Enrolled_Comp extends Component {
 			}
 			this.popUpNotice(NOTICE, 0, message.msg);
 		}
-		
-		getData(getRouter(ENROLL_STUDENT), { session: sessionStorage.session, id: id }, cb, { id: id });
+		var reason = document.getElementById("selected_train_time").value;
+		getData(getRouter(ENROLL_STUDENT), { session: sessionStorage.session, id: id,reason:reason }, cb, { id: id });
 	}
 
 	newStudent(student) {
@@ -444,7 +454,497 @@ class Enrolled_Comp extends Component {
 		}
 		getData(getRouter(REMOVE_STUDENT), { session: sessionStorage.session, id: id }, cb, { id: id });
 	}
-
+	change_notice_msg = (course_id,edu)=>{
+		if(document.getElementById("new_graduation_time").value==""){
+			console.log("zheli")
+			if(course_id==="3"){
+			
+				if(edu==="博士"){
+				  this.setState({
+					  notice_msg:"运维项目经理-博士毕业不少于1年",
+					  time_label:"毕业时间",
+					  time_istrue:0
+				  })
+				}else if(edu==="硕士"){
+					this.setState({
+						notice_msg:"运维项目经理-硕士毕业不少于2年",
+						time_label:"毕业时间",
+						time_istrue:0
+					})
+				  }else if(edu==="本科"){
+					this.setState({
+						notice_msg:"运维项目经理-本科毕业不少于3年",
+						time_label:"毕业时间",
+						time_istrue:0
+					})
+				  }else if(edu==="大专"){
+					this.setState({
+						notice_msg:"运维项目经理-大专毕业不少于4年",
+						time_label:"毕业时间",
+						time_istrue:0
+					})
+				  }else if(edu==="大专以下"){
+					this.setState({
+						notice_msg:"运维项目经理-大专以下毕业不少于10年",
+						time_label:"毕业时间",
+						time_istrue:0
+					})
+				  }
+				
+			}else if(course_id==="4"){
+				if(edu==="博士"){
+				  this.setState({
+					  notice_msg:"运维高级项目经理-博士毕业不少于2年",
+					  time_label:"毕业时间",
+					  time_istrue:0
+				  })
+				}else if(edu==="硕士"){
+					this.setState({
+						notice_msg:"运维高级项目经理-硕士毕业不少于3年",
+						time_label:"毕业时间",
+						time_istrue:0
+					})
+				  }else if(edu==="本科"){
+					this.setState({
+						notice_msg:"运维高级项目经理-本科毕业不少于5年",
+						time_label:"毕业时间",
+						time_istrue:0
+					})
+				  }else{
+					this.setState({
+						notice_msg:"完成运维项目经理登记的时间不少于3年",
+						time_label:"运维项目经理登记时间",
+						time_istrue:0
+					})
+				  }
+				  
+				
+			}
+		}else{
+			this.change_times(document.getElementById("new_graduation_time").value)
+		}
+	   }
+	   change_select_notice_msg = (course_id,edu)=>{
+		if(document.getElementById("change_graduation_time").value==""){
+			if(course_id==="3"){
+			
+				if(edu==="博士"){
+				  this.setState({
+					  notice_msg:"运维项目经理-博士毕业不少于1年",
+					  time_label:"毕业时间",
+					  time_istrue:0
+				  })
+				}else if(edu==="硕士"){
+					this.setState({
+						notice_msg:"运维项目经理-硕士毕业不少于2年",
+						time_label:"毕业时间",
+						time_istrue:0
+					})
+				  }else if(edu==="本科"){
+					this.setState({
+						notice_msg:"运维项目经理-本科毕业不少于3年",
+						time_label:"毕业时间",
+						time_istrue:0
+					})
+				  }else if(edu==="大专"){
+					this.setState({
+						notice_msg:"运维项目经理-大专毕业不少于4年",
+						time_label:"毕业时间",
+						time_istrue:0
+					})
+				  }else if(edu==="大专以下"){
+					this.setState({
+						notice_msg:"运维项目经理-大专以下毕业不少于10年",
+						time_label:"毕业时间",
+						time_istrue:0
+					})
+				  }
+				
+			}else if(course_id==="4"){
+				if(edu==="博士"){
+				  this.setState({
+					  notice_msg:"运维高级项目经理-博士毕业不少于2年",
+					  time_label:"毕业时间",
+					  time_istrue:0
+				  })
+				}else if(edu==="硕士"){
+					this.setState({
+						notice_msg:"运维高级项目经理-硕士毕业不少于3年",
+						time_label:"毕业时间",
+						time_istrue:0
+					})
+				  }else if(edu==="本科"){
+					this.setState({
+						notice_msg:"运维高级项目经理-本科毕业不少于5年",
+						time_label:"毕业时间",
+						time_istrue:0
+					})
+				  }else{
+					this.setState({
+						notice_msg:"完成运维项目经理登记的时间不少于3年",
+						time_label:"运维项目经理登记时间",
+						time_istrue:0
+					})
+				  }
+				  
+				
+			}
+		}else{
+			this.change_select_times(document.getElementById("change_graduation_time").value)
+		}
+	   }
+	   change_times = (event) =>{
+			var date = new Date(event);
+			console.log(date)
+			var graduation_time_stamp = date.getTime();
+			var myDate = new Date();
+			var graduation_long_time = myDate.getTime() - graduation_time_stamp;
+			var days_time =Math.floor(graduation_long_time/86400000);
+			var education = document.getElementById("new_education").value;
+	
+			if(document.getElementById("new_course_id").value==="3"){
+			if(education==="博士"){
+			if(days_time<365){
+			this.setState({
+				notice_msg:"不满足报名条件",
+				time_label:"毕业时间",
+				time_istrue:-1
+			})
+			}else{
+				this.setState({
+					notice_msg:"运维项目经理-博士毕业不少于1年",
+					time_label:"毕业时间",
+					time_istrue:0
+				})
+				
+			}
+	
+			}else if(education==="硕士"){
+			if(days_time<730){
+			this.setState({
+				notice_msg:"不满足报名条件",
+				time_label:"毕业时间",
+				time_istrue:-1
+			})
+			}else{
+				this.setState({
+					notice_msg:"运维项目经理-硕士毕业不少于2年",
+					time_label:"毕业时间",
+					time_istrue:0
+				})
+				
+			}
+			}
+			else if(education==="本科"){
+			if(days_time<1095){
+			this.setState({
+				notice_msg:"不满足报名条件",
+				time_label:"毕业时间",
+				time_istrue:-1
+			})
+			}else{
+				this.setState({
+					notice_msg:"运维项目经理-本科毕业不少于3年",
+					time_label:"毕业时间",
+					time_istrue:0
+				})
+				
+			}
+			}else if(education==="大专"){
+			if(days_time<1460){
+			this.setState({
+				notice_msg:"不满足报名条件",
+				time_label:"毕业时间",
+				time_istrue:-1
+			})
+			}else{
+				this.setState({
+					notice_msg:"运维项目经理-大专毕业不少于4年",
+					time_label:"毕业时间",
+					time_istrue:0
+				})
+				
+			}
+			}else if(education==="大专以下"){
+			if(days_time<3650){
+			this.setState({
+				notice_msg:"不满足报名条件",
+				time_label:"毕业时间",
+				time_istrue:-1
+			})
+			}else{
+				this.setState({
+					notice_msg:"运维项目经理-大专以下毕业不少于10年",
+					time_label:"毕业时间",
+					time_istrue:0
+				})
+				
+			}
+			}
+			}else if(document.getElementById("new_course_id").value==="4"){
+			if(education==="博士"){
+			if(days_time<730){
+			this.setState({
+				notice_msg:"不满足报名条件",
+				time_label:"毕业时间",
+				time_istrue:-1
+			})
+			}else{
+				this.setState({
+					notice_msg:"运维高级项目经理-博士毕业不少于2年",
+					time_label:"毕业时间",
+					time_istrue:0
+				})
+			}
+			}else if(education==="硕士"){
+			if(days_time<1095){
+			this.setState({
+			notice_msg:"不满足报名条件",
+			time_label:"毕业时间",
+			time_istrue:-1
+			})
+			}else{
+				this.setState({
+					notice_msg:"运维高级项目经理-硕士毕业不少于3年",
+					time_label:"毕业时间",
+					time_istrue:0
+				})
+			}
+			}
+			else if(education==="本科"){
+			if(days_time<1825){
+			this.setState({
+			notice_msg:"不满足报名条件",
+			time_label:"毕业时间",
+			time_istrue:-1
+			})
+			}else{
+				this.setState({
+					notice_msg:"运维高级项目经理-本科毕业不少于5年",
+					time_label:"毕业时间",
+					time_istrue:0
+				})
+			}
+			}else if(education==="大专"){
+			if(days_time<1095){
+			this.setState({
+			notice_msg:"不满足报名条件",
+			time_label:"运维项目经理登记时间",
+			time_istrue:-1
+			})
+			}else{
+				this.setState({
+					notice_msg:"完成运维项目经理登记的时间不少于3年",
+					time_label:"运维项目经理登记时间",
+					time_istrue:0
+				})
+			}
+			}else if(education==="大专以下"){
+			if(days_time<1095){
+			this.setState({
+			notice_msg:"不满足报名条件",
+			time_label:"运维项目经理登记时间",
+			time_istrue:-1
+			})
+			}else{
+				this.setState({
+					notice_msg:"完成运维项目经理登记的时间不少于3年",
+					time_label:"运维项目经理登记时间",
+					time_istrue:0
+				})
+			}
+			}
+			}
+	   }
+	   change_course_id = (e) =>{
+		   
+		var course_id = e.target.value;
+		console.log(course_id)
+		var edu = document.getElementById("new_education").value;
+		this.change_notice_msg(course_id,edu)
+	   }
+	   change_edu = (e) =>{
+		  var course_id = document.getElementById("new_course_id").value;
+		  
+		  var edu = e.target.value;
+		  this.change_notice_msg(course_id,edu)
+	   }
+	   change_select_times = (event) =>{
+		var date = new Date(event);
+		console.log(date)
+		var graduation_time_stamp = date.getTime();
+		var myDate = new Date();
+		var graduation_long_time = myDate.getTime() - graduation_time_stamp;
+		var days_time =Math.floor(graduation_long_time/86400000);
+		var education = document.getElementById("change_education").value;
+	
+		if(document.getElementById("student_course_id").value==="3"){
+		if(education==="博士"){
+		if(days_time<365){
+		this.setState({
+			notice_msg:"不满足报名条件",
+			time_label:"毕业时间",
+			time_istrue:-1
+		})
+		}else{
+			this.setState({
+				notice_msg:"运维项目经理-博士毕业不少于1年",
+				time_label:"毕业时间",
+				time_istrue:0
+			})
+			
+		}
+	
+		}else if(education==="硕士"){
+		if(days_time<730){
+		this.setState({
+			notice_msg:"不满足报名条件",
+			time_label:"毕业时间",
+			time_istrue:-1
+		})
+		}else{
+			this.setState({
+				notice_msg:"运维项目经理-硕士毕业不少于2年",
+				time_label:"毕业时间",
+				time_istrue:0
+			})
+			
+		}
+		}
+		else if(education==="本科"){
+		if(days_time<1095){
+		this.setState({
+			notice_msg:"不满足报名条件",
+			time_label:"毕业时间",
+			time_istrue:-1
+		})
+		}else{
+			this.setState({
+				notice_msg:"运维项目经理-本科毕业不少于3年",
+				time_label:"毕业时间",
+				time_istrue:0
+			})
+			
+		}
+		}else if(education==="大专"){
+		if(days_time<1460){
+		this.setState({
+			notice_msg:"不满足报名条件",
+			time_label:"毕业时间",
+			time_istrue:-1
+		})
+		}else{
+			this.setState({
+				notice_msg:"运维项目经理-大专毕业不少于4年",
+				time_label:"毕业时间",
+				time_istrue:0
+			})
+			
+		}
+		}else if(education==="大专以下"){
+		if(days_time<3650){
+		this.setState({
+			notice_msg:"不满足报名条件",
+			time_label:"毕业时间",
+			time_istrue:-1
+		})
+		}else{
+			this.setState({
+				notice_msg:"运维项目经理-大专以下毕业不少于10年",
+				time_label:"毕业时间",
+				time_istrue:0
+			})
+			
+		}
+		}
+		}else if(document.getElementById("student_course_id").value==="4"){
+		if(education==="博士"){
+		if(days_time<730){
+		this.setState({
+			notice_msg:"不满足报名条件",
+			time_label:"毕业时间",
+			time_istrue:-1
+		})
+		}else{
+			this.setState({
+				notice_msg:"运维高级项目经理-博士毕业不少于2年",
+				time_label:"毕业时间",
+				time_istrue:0
+			})
+		}
+		}else if(education==="硕士"){
+		if(days_time<1095){
+		this.setState({
+		notice_msg:"不满足报名条件",
+		time_label:"毕业时间",
+		time_istrue:-1
+		})
+		}else{
+			this.setState({
+				notice_msg:"运维高级项目经理-硕士毕业不少于3年",
+				time_label:"毕业时间",
+				time_istrue:0
+			})
+		}
+		}
+		else if(education==="本科"){
+		if(days_time<1825){
+		this.setState({
+		notice_msg:"不满足报名条件",
+		time_label:"毕业时间",
+		time_istrue:-1
+		})
+		}else{
+			this.setState({
+				notice_msg:"运维高级项目经理-本科毕业不少于5年",
+				time_label:"毕业时间",
+				time_istrue:0
+			})
+		}
+		}else if(education==="大专"){
+		if(days_time<1095){
+		this.setState({
+		notice_msg:"不满足报名条件",
+		time_label:"运维项目经理登记时间",
+		time_istrue:-1
+		})
+		}else{
+			this.setState({
+				notice_msg:"完成运维项目经理登记的时间不少于3年",
+				time_label:"运维项目经理登记时间",
+				time_istrue:0
+			})
+		}
+		}else if(education==="大专以下"){
+		if(days_time<1095){
+		this.setState({
+		notice_msg:"不满足报名条件",
+		time_label:"运维项目经理登记时间",
+		time_istrue:-1
+		})
+		}else{
+			this.setState({
+				notice_msg:"完成运维项目经理登记的时间不少于3年",
+				time_label:"运维项目经理登记时间",
+				time_istrue:0
+			})
+		}
+		}
+		}
+	}
+	   change_select_course_id = (e) =>{
+		   
+		var course_id = e.target.value;
+		var edu = document.getElementById("change_education").value;
+		this.change_select_notice_msg(course_id,edu)
+	   }
+	   change_select_edu= (e) =>{
+		   console.log("xiugai")
+		  var course_id = document.getElementById("student_course_id").value;
+		  
+		  var edu = e.target.value;
+		  this.change_select_notice_msg(course_id,edu)
+	   }
 	modifyStudent = () => {
 		var cb = (route, message, arg) => {
 			if (message.code === Code.LOGIC_SUCCESS) {
@@ -456,17 +956,27 @@ class Enrolled_Comp extends Component {
 			this.popUpNotice(NOTICE, 0, message.msg);
 		}
 		var id = this.state.selected.id;
+		if(document.getElementById("licence.code").value==""){
+			this.popUpNotice(NOTICE, 0, "请输入身份证号码");
+			return;
+		}
+		if (document.getElementById("change_graduation_time").value === "") {
+			this.popUpNotice(NOTICE, 0, "您没有输入有效时间")
+			return
+			}
 		var obj = {
 			name: document.getElementById("student_name").value,
 			identity_card: document.getElementById("licence.code").value,
 			course_id:document.getElementById("student_course_id").value,
-			area_id:document.getElementById("new_area_id").value,
+			area_id:document.getElementById("change_area_id").value,
 			register: document.getElementById("register").value,
 			department: document.getElementById("department").value,
 			duty: document.getElementById("duty").value,
 			mobile: document.getElementById("mobile").value,
 			mail: document.getElementById("mail").value,
 			wechat: document.getElementById("wechat").value,
+			education:document.getElementById("change_education").value,
+			graduation_time:document.getElementById("change_graduation_time").value
 		//	detail: document.getElementById("detail").value,
 		}
 		getData(getRouter(UPDATE_STUDENT), { session: sessionStorage.session, id: this.state.selectedStudentId, student: obj }, cb, { self: window.currentPage, data: obj });
@@ -658,14 +1168,19 @@ class Enrolled_Comp extends Component {
 			{/* 运维修改 */}
 			{sessionStorage.classify==2?
 			<select
-            style={{borderBottom:"1px dashed"}}
+           // style={{borderBottom:"1px dashed"}}
 			className="nyx-info-select-lg"
             id="new_course_id"
-            disabled={true}
+			//disabled={true}
+			onChange={(e)=>{
+
+				this.change_course_id(e)
+				
+			}}
 			label={Lang[window.Lang].pages.org.clazz.info.area}
 			>
 			<option key={3} value={3}>运维项目经理</option>
-			{/* <option key={4} value={4}>运维高级项目经理</option> */}
+			<option key={4} value={4}>运维高级项目经理</option>
 			</select>:""
 			}
 			{/* 运维修改 */}
@@ -751,13 +1266,13 @@ class Enrolled_Comp extends Component {
 			}}
 			style={{position:"absolute",marginTop:"2rem",right:"38px",fontSize:"10px",color:"#2196f3",cursor:"pointer"}}>身份证效验</span>
 			<div style={{float:"left"}} className="nyx-info-select-div">
-			<p className="nyx-info-select-label">项目经理情况</p>
+			<p className="nyx-info-select-label">运维项目经理情况</p>
 			<select
 			className="nyx-info-select-lg"
 			id="new_id_type"
 			onChange={(e)=>{
                if(e.target.value==2){
-				this.popUpNotice(ALERT, 0, "未登记项目经理/高级项目经理人员需要先报名参加项目经理培训", [
+				this.popUpNotice(ALERT, 0, "未登记运维项目经理/运维高级项目经理人员需要先报名参加运维项目经理培训", [
 					() => {
 					this.closeNotice();
 					}, () => {
@@ -767,7 +1282,7 @@ class Enrolled_Comp extends Component {
 			}}
 			label={Lang[window.Lang].pages.org.clazz.info.area}
 			>
-			<option value={"1"}>{"已登记项目经理/高级项目经理"}</option>
+			<option value={"1"}>{"已登记运维项目经理/运维高级项目经理"}</option>
 			<option value={"2"}>{"未登记"}</option>
 			</select>
 			</div>
@@ -789,7 +1304,40 @@ class Enrolled_Comp extends Component {
 			id={"new_wechat"}
 			label={Lang[window.Lang].pages.com.students.input.wechat}
 			/>
-			
+			<div style={{float:"left"}} className="nyx-info-select-div">
+				<p className="nyx-info-select-label">学历</p>
+				<select
+					onChange = {(e)=>{
+						this.change_edu(e)
+					}}
+					className="nyx-info-select-lg"
+					id="new_education"
+					>
+				<option value={"博士"}>{"博士"}</option>
+				<option value={"硕士"}>{"硕士"}</option>
+				<option value={"本科"}>{"本科"}</option>
+				<option value={"大专"}>{"大专"}</option>
+				<option value={"大专以下"}>{"大专以下"}</option>
+			</select>
+			</div>
+			<div
+              style={{top:"1.2rem"}}
+			   className="nyx-input-date nyx-form-div nyx-clazz-message"
+			   >
+			   <span 
+			    style={{top:"-16px"}}
+			   >{this.state.time_label}</span>
+				<input
+			   // id="train_starttime"
+				 style={{width:"98%"}}
+				  type="date"
+				  id="new_graduation_time"
+				  //defaultValue={this.state.selected_start_year+"-"+this.state.selected_start_month+"-"+this.state.selected_start_date}
+				  onChange={(event) => {
+					this.change_times(document.getElementById("new_graduation_time").value);
+				  }}/>
+				  <span  style={this.state.time_istrue==0?{position:"relative",top:0,color:"#2196F3"}:{position:"relative",top:0,color:"red"}}>{this.state.notice_msg}</span>
+			   </div>   
 			{/* <div className="nyx-remark">
 			<h4>备注栏:</h4>
 			<p>1.临时登记人员填写临时登记证书编号(网站可查);</p>
@@ -802,6 +1350,7 @@ class Enrolled_Comp extends Component {
 			<div>
 			<Button style={{backgroundColor:"#2196F3",color:"#FFF",marginRight:"1rem"}}
 			onClick={() => {
+				
 			var new_info_array={new_name:"您没有输入姓名",new_mobile:"您没有输入手机",
 			new_mail:"您没有输入邮箱",new_identity_card:"您没有输入证件编号",
 			new_department:"您没有输入部门",new_duty:"您没有输入职务"
@@ -812,6 +1361,10 @@ class Enrolled_Comp extends Component {
 			return
 			}
 			}
+			if (document.getElementById("new_graduation_time").value === "") {
+				this.popUpNotice(NOTICE, 0, "您没有输入有效时间")
+				return
+				}
 			this.newStudent({
 
 			name: document.getElementById("new_name").value,
@@ -824,7 +1377,10 @@ class Enrolled_Comp extends Component {
 			identity_card: document.getElementById("new_identity_card").value,
 			register: document.getElementById("new_register").value,
 			area_id: document.getElementById("new_area_id").value,
-			course_id: document.getElementById("new_course_id").value
+			course_id: document.getElementById("new_course_id").value,
+			education:document.getElementById("new_education").value,
+			graduation_time:document.getElementById("new_graduation_time").value,
+			
 			})
 			}}
 			>
@@ -842,11 +1398,83 @@ class Enrolled_Comp extends Component {
 			</Dialog>
 					)
 				}
+				SignUpDialog(student) {
+					console.log(student.area_id)
+					return (
+						<Dialog open={this.state.openSignUpDialog} onRequestClose={this.handleRequestClose} >
 
+			<div style={{padding:"2rem"}}>
+				{/* <div>{student.name}</div> */}
+				<div style={{textAlign:"center",color:"#2196F3",fontWeight:"800",paddingBottom:"2rem",fontSize:"20px"}}>
+				为{student.name}报名{student.area_id?getCity(student.area_id):""}的{student.course_id?getCourse(student.course_id):""}培训班
+				</div>
+				<p style={{color:"#2196F3"}} >
+			可参加培训时间
+			</p>
+			{/* 运维修改 */}
+			
+			<select
+			className={this.state.selected.a_id == -1 ?"nyx-card-enrroll-select-lg-dashed":"nyx-card-enrroll-select-lg"}
+			defaultValue={""}
+			id={"selected_train_time"}
+			onChange={(e)=>{
+			
+			}}
+			//defaultValue={this.state.selected.course_id ? this.state.selected.course_id : ""}
+			>  
+			    <option value={"0"}>{"-选择-"}</option>
+		        <option value={"1"}>{"1个月以内"}</option>
+				<option value={"2"}>{"1-2个月"}</option>
+				<option value={"3"}>{"2个月以后"}</option>
+			</select>
+            {/* <span style={this.state.notice_train_time==0?{color:"#2196f3"}:{color:"red"}}>请选择可参加培训时间</span> */}
+
+				<div style = {{color:"#2196F3",marginTop:"1rem"}}>
+               平台通知
+               </div>
+				<ul className="nyx-login-select_list_Dialog">
+					<li><span style = {{color:"#2196F3"}}>01.</span>{Lang[window.Lang].pages.main.notice_one}
+					<a style={{fontSize:"16px",color:"#2196F3"}} target="view_window" href="http://www.csi-s.org.cn/miitnew_webmap/miitnew_pmbzgf/2015/07/17/1778896c187945e08b3effb9fcd7bc76.html"> 查看原文</a></li>
+					<li><span style = {{color:"#2196F3"}}>02.</span>{Lang[window.Lang].pages.main.notice_two}</li>
+					<li><span style = {{color:"#2196F3"}}>03.</span>{Lang[window.Lang].pages.main.notice_three}</li>
+					<li><span style = {{color:"#2196F3"}}>04.</span>{Lang[window.Lang].pages.main.notice_four}</li>
+				</ul>
+
+			</div>
+		
+			<DialogActions>
+			<div>
+			<Button style={{backgroundColor:"#2196F3",color:"#FFF",marginRight:"1rem"}}
+			onClick={() => {
+				if(document.getElementById("selected_train_time").value==="0"){
+									this.popUpNotice(NOTICE, 0, "请选择可参加培训时间")
+									console.log(this.state.notice_train_time)
+									return;
+								}
+							this.erollStudent(student.id);
+							this.handleRequestClose()
+			}}
+			>
+			{Lang[window.Lang].pages.main.certain_button}
+			</Button>
+			<Button style={{backgroundColor:"rgba(0, 0, 0, 0.12)"}}
+			onClick={() => {
+
+			this.handleRequestClose()
+			}}
+			>
+			{Lang[window.Lang].pages.main.cancel_button}
+			</Button>
+			</div>
+			</DialogActions>
+			</Dialog>
+					)
+				}
 				handleRequestClose = () => {
 					this.setState({
 						openNewStudentDialog: false,
 						openCancelReason: false,
+						openSignUpDialog:false,
 						openCancel:false
 					})
 				}
@@ -900,7 +1528,7 @@ class Enrolled_Comp extends Component {
 			<div style={{width:"800px"}} className={'nyx-page'}>
 				{/* 运维修改 */}
 				{sessionStorage.classify==1?<div>
-					<div className={'nyx-tips nyx-display-none'}><p>{"【已临时登记的项目经理】" +
+					<div className={'nyx-tips nyx-display-none'}><p>{"【已临时登记的运维项目经理】" +
 				"第一步：请在下表中点击【修改】补充完整人员信息。" +
 				"第二步：点击【报名】进行培训报名"}</p>
 				<p style={{marginLeft:"0.4rem"}}>{"特别提醒:在“报名”提交前必须填完“企业相关信息”。"}</p>
@@ -950,16 +1578,19 @@ class Enrolled_Comp extends Component {
 					this.popUpNotice("alert", 0, '请先补全报名人员信息');
 					return
 					}
-					console.log(student);
+					this.setState({
+						SignUpStudent:student,
+						openSignUpDialog: true,
+					})
 					this.state.selectedStudentId = student.id;
 
-					this.popUpNotice(ALERT, 0, "为" + student.name + "报名"+ getCity(student.area_id) + "的"+getCourse(student.course_id)+ "培训班", [
-					() => {
-					this.erollStudent(student.id);
-					this.closeNotice();
-					}, () => {
-					this.closeNotice();
-					}]);
+					// this.popUpNotice(ALERT, 0, "为" + student.name + "报名"+ getCity(student.area_id) + "的"+getCourse(student.course_id)+ "培训班", [
+					// () => {
+					// this.erollStudent(student.id);
+					// this.closeNotice();
+					// }, () => {
+					// this.closeNotice();
+					// }]);
 					}, () => {
 					this.state.selected = student;
 					this.popUpNotice(ALERT, 0, "删除学生" + student.name, [
@@ -976,7 +1607,7 @@ class Enrolled_Comp extends Component {
 			</List>
 			</Paper>
 			<div className={'nyx-tips nyx-display-none'}>
-			{"【未临时登记的项目经理】" +
+			{"【未临时登记的运维项目经理】" +
 			"第一步：请在下表中点击【添加】新增人员，输入完整信息。" +
 			"第二步：点击【报名】进行报名"
 			}
@@ -1009,6 +1640,8 @@ class Enrolled_Comp extends Component {
 			this.setState({
 			openNewStudentDialog: true,
 			course: "1",
+			time_label:"毕业时间",
+			notice_msg:"运维项目经理-博士毕业不少于1年"
 			})
 			}}
 			>
@@ -1034,6 +1667,71 @@ class Enrolled_Comp extends Component {
 			is_inlist={student.is_inlist}
 			action={[() => {
 			this.selectedStudent(student);
+			var edu = student.education;
+			var course_id = student.course_id;
+			if(course_id==="1"){
+		
+				if(edu==="博士"){
+				  this.setState({
+					  notice_msg:"运维项目经理-博士毕业不少于1年",
+					  time_label:"毕业时间",
+					  time_istrue:0
+				  })
+				}else if(edu==="硕士"){
+					this.setState({
+						notice_msg:"运维项目经理-硕士毕业不少于2年",
+						time_label:"毕业时间",
+						time_istrue:0
+					})
+				  }else if(edu==="本科"){
+					this.setState({
+						notice_msg:"运维项目经理-本科毕业不少于3年",
+						time_label:"毕业时间",
+						time_istrue:0
+					})
+				  }else if(edu==="大专"){
+					this.setState({
+						notice_msg:"运维项目经理-大专毕业不少于4年",
+						time_label:"毕业时间",
+						time_istrue:0
+					})
+				  }else if(edu==="大专以下"){
+					this.setState({
+						notice_msg:"运维项目经理-大专以下毕业不少于10年",
+						time_label:"毕业时间",
+						time_istrue:0
+					})
+				  }
+				
+			}else if(course_id==="2"){
+				if(edu==="博士"){
+				  this.setState({
+					  notice_msg:"运维高级项目经理-博士毕业不少于2年",
+					  time_label:"毕业时间",
+					  time_istrue:0
+				  })
+				}else if(edu==="硕士"){
+					this.setState({
+						notice_msg:"运维高级项目经理-硕士毕业不少于3年",
+						time_label:"毕业时间",
+						time_istrue:0
+					})
+				  }else if(edu==="本科"){
+					this.setState({
+						notice_msg:"运维高级项目经理-本科毕业不少于5年",
+						time_label:"毕业时间",
+						time_istrue:0
+					})
+				  }else{
+					this.setState({
+						notice_msg:"完成运维项目经理登记的时间不少于3年",
+						time_label:"运维项目经理登记时间",
+						time_istrue:0
+					})
+				  }
+				  
+				
+			}
 			this.toggleDrawer(true)()
 			}, () => {
 			// console.log(getCache("info_completed"));
@@ -1051,13 +1749,10 @@ class Enrolled_Comp extends Component {
 			return
 			}
 			this.state.selectedStudentId = student.id;
-			this.popUpNotice(ALERT, 0, "为" + student.name + "报名"+ getCity(student.area_id) + "的"+getCourse(student.course_id)+ "培训班", [
-			() => {
-			this.erollStudent(student.id);
-			this.closeNotice();
-			}, () => {
-			this.closeNotice();
-			}]);
+			this.setState({
+				SignUpStudent:student,
+				openSignUpDialog: true
+			})
 			}, () => {
 			this.state.selected = student;
 			this.popUpNotice(ALERT, 0, "删除学生" + student.name, [
@@ -1099,14 +1794,10 @@ class Enrolled_Comp extends Component {
 				this.popUpNotice("alert", 0, '请先补全报名人员信息');
 				return
 				}
-				this.state.selectedStudentId = student.id;
-				this.popUpNotice(ALERT, 0, "为" + student.name + "报名"+ getCity(student.area_id) + "的"+getCourse(student.course_id)+ "培训班", [
-				() => {
-				this.erollStudent(student.id);
-				this.closeNotice();
-				}, () => {
-				this.closeNotice();
-				}]);
+				this.setState({
+					SignUpStudent:student,
+					openSignUpDialog: true
+				})
 				}, () => {
 				this.state.selected = student;
 				this.popUpNotice(ALERT, 0, "删除学生" + student.name, [
@@ -1560,11 +2251,14 @@ this.closeNotice();
 			<select
 			className={this.state.selected.a_id == -1 ?"nyx-card-enrroll-select-lg-dashed":"nyx-card-enrroll-select-lg"}
 			id={"student_course_id"}
+			onChange = {(e) =>{
+				this.change_select_course_id(e);
+			}}
 			defaultValue={this.state.selected.course_id ? this.state.selected.course_id : ""}
-			disabled={true}
+			//disabled={true}
 			>
 		      <option key={3} value={3}>运维项目经理</option>
-			  {/* <option key={4} value={4}>高级运维项目经理</option> */}
+			  <option key={4} value={4}>高级运维项目经理</option>
 			</select>:""}
 			{/* 运维修改 */}
 			{/* <select
@@ -1580,7 +2274,7 @@ this.closeNotice();
 			<p className="nyx-card-enrroll-select-label-lg">培训城市</p>
 			<select
 			className={this.state.selected.a_id == -1 ?"nyx-card-enrroll-select-lg-dashed":"nyx-card-enrroll-select-lg"}
-			id="new_area_id"
+			id="change_area_id"
 			defaultValue={this.state.selected.area_id === null ? "" : this.state.selected.area_id}
 			label={Lang[window.Lang].pages.org.clazz.info.area}
 			>
@@ -1598,8 +2292,8 @@ this.closeNotice();
 			this.handleChangeCourse(e, value)
 			}}
 			>
-			<LabelRadio value={"1"} label="项目经理" />
-			<LabelRadio value={"2"} label="高级项目经理" />
+			<LabelRadio value={"1"} label="运维项目经理" />
+			<LabelRadio value={"2"} label="运维高级项目经理" />
 			</RadioGroup>
 			</FormControl> */}
 			<TextField
@@ -1648,6 +2342,46 @@ this.closeNotice();
 			defaultValue={this.state.selected.wechat ? this.state.selected.wechat : ""}
 			fullWidth
 			/>
+			<p className="nyx-card-enrroll-select-label-lg">
+			学历
+			</p>
+			{/* 运维修改 */}
+			
+			<select
+			onChange={(e)=>{
+				this.change_select_edu(e)
+			}}
+			className={this.state.selected.a_id == -1 ?"nyx-card-enrroll-select-lg-dashed":"nyx-card-enrroll-select-lg"}
+			defaultValue={this.state.selected.education ? this.state.selected.education : ""}
+			id={"change_education"}
+			//defaultValue={this.state.selected.course_id ? this.state.selected.course_id : ""}
+			>
+		        <option value={"博士"}>{"博士"}</option>
+				<option value={"硕士"}>{"硕士"}</option>
+				<option value={"本科"}>{"本科"}</option>
+				<option value={"大专"}>{"大专"}</option>
+				<option value={"大专以下"}>{"大专以下"}</option>
+			</select>
+			<div
+              style={{top:"1.2rem",width:"100%"}}
+			   className="nyx-input-date nyx-form-div nyx-clazz-message"
+			   >
+			   <span 
+			    style={{top:"-5px"}}
+			   >{this.state.time_label}</span>
+				<input
+			   // id="train_starttime"
+				 style={{width:"100%",marginTop:"15px"}}
+				  type="date"
+				  id="change_graduation_time"
+				  onChange={(event) => {
+					this.change_select_times(document.getElementById("change_graduation_time").value);
+				  }}
+				  defaultValue={this.state.selected.graduation_time}
+				/>
+				<span  style={this.state.time_istrue==0?{position:"relative",top:0,color:"#2196F3"}:{position:"relative",top:0,color:"red"}}>{this.state.notice_msg}</span>
+
+			   </div> 
 			{/* <TextField
 			id={"detail"}
 			style={{marginTop:"1em"}}
@@ -1657,7 +2391,7 @@ this.closeNotice();
 			fullWidth
 			/> */}
 			<Button
-			style={{backgroundColor:"#2196f3", color:"#FFF",margin: 10, float: "right" }}
+			style={{backgroundColor:"#2196f3", color:"#FFF",margin: 10,marginTop:"40px", float: "right" }}
 			onClick={(e) => {
 			this.modifyStudent(e)
 			}}>
@@ -1834,6 +2568,7 @@ type="checkbox"/>
 			{this.newStudentDialog()}
 			{this.cancel_reason()}
 			{this.cancel_show()}
+			{this.SignUpDialog(this.state.SignUpStudent)}
 			<CommonAlert
 			show={this.state.alertOpen}
 			type={this.state.alertType}
