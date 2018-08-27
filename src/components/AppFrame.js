@@ -1094,9 +1094,9 @@ style={{
           className="nyx-login-select-button"
           style={{paddingLeft:0}}
           onClick={()=>{
-           sessionStorage.classify=2;
-            this.context.router.push("/com/home");
-            location.reload();
+          //  sessionStorage.classify=2;
+          //   this.context.router.push("/com/home");
+          //   location.reload();
           }}><span style={{lineHeight:"90px",textAlign:"center"}}>
             运维项目经理
             </span>

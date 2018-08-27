@@ -74,13 +74,13 @@ var AppRouter = {
       nav
       component={Enrolled_Comp}
     />:""}
-      {sessionStorage.classify==1?<Route
+    <Route
         title={titleize(Lang[window.Lang].pages.com.resit.title)}
         path={'/com/resit'}
         content={Resit}
         nav
         component={Resit}
-      />:""}
+      />
       
       <Route
         title={titleize(Lang[window.Lang].pages.com.infos.admin.account_info)}

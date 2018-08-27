@@ -210,7 +210,7 @@ class Resit extends Component {
 		getData(getRouter(RECALL_RESIT), { session: sessionStorage.session, resit_id: id }, cb, { });
 	}
 	 updateStudents = () => {
-		let fkStudents = [], newStudents = [], unarragedStudents = [], arrangedStudents = [],unarrageResits = [],arrageResits = [],arrangedStudents_comp=[];
+		let fkStudents = [], newStudents = [], unarragedStudents = [], arrangedStudents = [],unarrageResits = [],arrageResits = [],arrangedStudents_comp=[],unarrageResits_comp=[],arrageResits_comp=[];
 		for (var i = 0; i < this.state.students.length; i++) {
 			if (this.state.students[i].is_inlist == STATUS_FK_UNDO) {
 				fkStudents.push(this.state.students[i]);
@@ -235,12 +235,24 @@ class Resit extends Component {
 			unarragedStudents.push(this.state.cancel_students[i]);
 		}
 		for(var i = 0; i < this.state.resits.length; i++) {
+			console.log(this.state.resits)
 			if (this.state.resits[i].state == 1) {
+				if(this.state.resits[i].course_id==1||this.state.resits[i].course_id==2){
 				unarrageResits.push(this.state.resits[i]);
 			}
+			if(this.state.resits[i].course_id==3||this.state.resits[i].course_id==4){
+				unarrageResits_comp.push(this.state.resits[i]);
+			}
+		}
 			if (this.state.resits[i].state == 2) {
+				if(this.state.resits[i].course_id==1||this.state.resits[i].course_id==2){
 				arrageResits.push(this.state.resits[i]);
 			}
+			if(this.state.resits[i].course_id==3||this.state.resits[i].course_id==4){
+				arrageResits_comp.push(this.state.resits[i]);
+			}
+		}
+
 		}
 		this.setState({
 			fkStudents: fkStudents,
@@ -249,7 +261,9 @@ class Resit extends Component {
 			arrangedStudents: arrangedStudents,
 			unarrageResits:unarrageResits,
 			arrageResits:arrageResits,
-			arrangedStudents_comp:arrangedStudents_comp
+			arrangedStudents_comp:arrangedStudents_comp,
+			unarrageResits_comp:unarrageResits_comp,
+			arrageResits_comp:arrageResits_comp
 		})
 	}
 
@@ -309,52 +323,6 @@ class Resit extends Component {
 		this.state.selected = student;
 		this.state.course = student.course_id;
 	}
-	// resit_check() {
-	// 				return(
-	// 					<Dialog open={this.state.openResitCheck} onRequestClose={this.handleRequestClose} >
-	// 					<div style={{padding:"0 24px"}}>
-	// 					<DialogTitle style={{padding:"24px 0"}}>
-	// 					请输入需要补考人员的有效身份证号码
-	// 					</DialogTitle>
-	// 					<TextField
-	// 						style={{width:"100%",marginBottom:"2rem",marginTop:"0.5rem"}}
-	// 						className="nyx-clazz-message"
-	// 						key={"resit_idCard"}
-	// 						id={"resit_idCard"}
-	// 						label={"身份证号码"}
-	// 						// value={this.state.selected["class_head"] === null ? "" : this.state.selected["class_head"]}
-	// 						onChange={(event) => {
-	// 						this.setState({
-	// 							resit_idCard:event.target.value 
-	// 						});
-	// 						}}
-	// 						>
-	// 		</TextField> 
-	// 					</div>
-	// 					<DialogActions>
-					
-	// 					<div>
-	// 					<Button style={{backgroundColor:"#2196F3",color:"#FFF",marginRight:"1rem"}}
-	// 					onClick={() => {
-	// 						this.send_identity_card()
-	// 					//	this.cancelEnroll(this.state.cancel_show_student_id)
-	// 					//this.handleRequestClose()
-	// 					}}
-	// 					>
-	// 					{Lang[window.Lang].pages.main.certain_button}
-	// 					</Button>
-	// 					<Button style={{backgroundColor:"rgba(0, 0, 0, 0.12)"}}
-	// 					onClick={() => {
-	// 					this.handleRequestClose()
-	// 					}}
-	// 					>
-	// 					{Lang[window.Lang].pages.main.cancel_button}
-	// 					</Button>
-	// 					</div>
-	// 					</DialogActions>
-	// 					</Dialog>
-	// 							)
-	// 						}	
 				newStudentDialog() {
 					return (
 						<Dialog open={this.state.openNewStudentDialog} onRequestClose={this.handleRequestClose} >
@@ -469,11 +437,7 @@ class Resit extends Component {
 			return
 			}
 			}
-			// var resit_info={
-
-			// }
 			this.completion_resitinfo({
-
 			name: document.getElementById("check_resit_name").value,
 			department: document.getElementById("check_resit_department").value,
 			duty: document.getElementById("check_resit_duty").value,
@@ -580,7 +544,7 @@ class Resit extends Component {
 
                 </div>             
 					<div className={this.state.resit_height ? "nyx-list-paper" : "nyx-list-paper-change"}>
-					{this.state.unarrageResits.map(student =>
+					{sessionStorage.classify==1?this.state.unarrageResits.map(student =>
 					<StudentCard
 					type={CARD_TYPE_UNARRANGE}
 					key={student.id}
@@ -613,8 +577,41 @@ class Resit extends Component {
 					}]);
 					}]}>
 					</StudentCard>
-					)}
-					{this.state.arrageResits.map(student =>
+					):this.state.unarrageResits_comp.map(student =>
+						<StudentCard
+						type={CARD_TYPE_UNARRANGE}
+						key={student.id}
+						name={student.name === null ? "" : student.name.toString()}
+						mobile={student.mobile === null ? "" : student.mobile.toString()}
+						email={student.mail === null ? "" : student.mail.toString()}
+						level={Number(student.course_id)}
+						city={Number(student.area_id)}
+						//duty={}
+						//department={student.department === null ? "" : student.department.toString()}
+						institution={student.institution === null ? "" : Number(student.institution)}
+						is_inlist={student.is_inlist}
+						action={[() => 
+						 {
+						this.popUpNotice(ALERT, 0, "取消" + student.name + "补考报名", [
+						() => {
+						this.cancelResitStudent(student.id);
+						this.closeNotice();
+						}, () => {
+						this.closeNotice();
+						}]);
+						}, () => {
+						this.state.selected = student;
+						this.popUpNotice(ALERT, 0, "删除学生" + student.name, [
+						() => {
+						this.removeStudent(student.id);
+						this.closeNotice();
+						}, () => {
+						this.closeNotice();
+						}]);
+						}]}>
+						</StudentCard>
+						)}
+					{sessionStorage.classify==1?this.state.arrageResits.map(student =>
 					<StudentCard
 					type={CARD_TYPE_ARRANGE}
 					key={student.id}
@@ -653,7 +650,46 @@ class Resit extends Component {
 				
 					]}>
 					</StudentCard>
-					)}
+					):this.state.arrageResits_comp.map(student =>
+						<StudentCard
+						type={CARD_TYPE_ARRANGE}
+						key={student.id}
+						name={student.name === null ? "" : student.name.toString()}
+						mobile={student.mobile === null ? "" : student.mobile.toString()}
+						email={student.mail === null ? "" : student.mail.toString()}
+						level={Number(student.course_id)}
+						city={Number(student.area_id)}
+						//duty={}
+						//department={student.department === null ? "" : student.department.toString()}
+						institution={student.institution === null ? "" : Number(student.institution)}
+						is_inlist={student.is_inlist}
+						action={[() => 
+							{
+								this.state.selectedStudentId = student.id;
+								var id = student.id;
+								var cb = (router, message, arg) => {
+								if (message.code === Code.LOGIC_SUCCESS) {
+								}
+								var class_head = message.data.resit_classinfo.class_head!=null?"班主任"+message.data.resit_classinfo.class_head:"";
+								var mobile = message.data.resit_classinfo.mobile!=null?"-班主任电话"+message.data.resit_classinfo.mobile:"";
+								var address = message.data.resit_classinfo.address!=null?"-地址"+message.data.resit_classinfo.address:"";
+								var train_starttime = message.data.resit_classinfo.train_starttime!=null?"-开班时间"+message.data.resit_classinfo.train_starttime:"";
+								var message_data= class_head!=""?class_head+mobile+address+train_starttime:"暂无班级安排"
+								this.popUpNotice(ALERT, 0, message_data, [
+								() => {
+								//this.agreeArrange();
+								this.closeNotice();
+								}, () => {
+								this.closeNotice();
+								}]);
+								}
+								getData(getRouter(RESIT_CLASSINFO), { session: sessionStorage.session, resit_id: student.id }, cb, { id: id });
+								}
+							
+					
+						]}>
+						</StudentCard>
+						)}
 					</div>
 			</List>
 			</Paper>
@@ -730,7 +766,7 @@ class Resit extends Component {
 					 <p className="nyx-resit-name" style={{width:"80px",marginLeft:"3rem"}}>姓名</p>
 					 <p className="nyx-resit-name" style={{width:"150px"}}>科目</p>
 					 <span className="nyx-resit-name" style={{width:"150px"}}>地区</span>
-					 {this.state.arrangedStudents.map(resit_student => {
+					 {sessionStorage.classify==1?this.state.arrangedStudents.map(resit_student => {
 
 						switch (resit_student.is_inlist) {
 						case "3":
@@ -780,9 +816,60 @@ class Resit extends Component {
 						</div>
 						)
 						}
-						})}
+						}):this.state.arrangedStudents_comp.map(resit_student => {
+                      console.log(resit_student)
+							switch (resit_student.is_inlist) {
+							case "3":
+							return (
+							<div key={resit_student.id}>
+							{/* <input 
+							style={{margin:"1rem 0.5rem 0 2rem",height:"16px"}}
+							name={"resitselected"}
+							value={resit_student.id}
+							type="checkbox"/>  */}
+							<div
+								title={resit_student.name}
+								className="nyx-clazz-student-message"
+								style={{width:"80px",margin:"1rem 0.5rem 0 2rem"}}
+							>{resit_student.name}</div>
+							<div
+								title={getCourse(resit_student.course_id)}
+								className="nyx-clazz-student-message"
+								style={{width:"150px"}}
+							>{getCourse(resit_student.course_id)}</div>
+							<div
+								title={getCity(resit_student.area_id)}
+								className="nyx-clazz-student-message"
+								style={{width:"150px"}}
+							>{getCity(resit_student.area_id)}</div>
+							<Button
+								color="primary"
+								raised 
+								onClick={() => {
+									this.popUpNotice(ALERT, 0, resit_student.name+"报名参加补考", [
+										() => {
+											this.state.resitStudent=[];
+											this.state.resitStudent.push(resit_student.id)
+											this.resit_student(this.state.resitStudent);
+											this.closeNotice();
+										}, () => {
+											this.closeNotice();
+										}]);  
+								
+								}}
+								className="nyx-org-btn-sm"                                            
+								style={{ position:"relative",top:"7px",minHeight:"26px",float:"right",right:"2rem"}}
+							>
+								{"报名"}
+							</Button>
+	
+							</div>
+							)
+							}
+							})}
 					 </div>
-					 <span  style={{  display:this.state.unline.length==0?"none":"block",color:"#2196F3",marginLeft:"2rem",top:"3rem",position:"relative",fontSize:"18px" }}>未通过系统报名培训的学员列表</span>
+					 {sessionStorage.classify==1?<div>
+						<span  style={{  display:this.state.unline.length==0?"none":"block",color:"#2196F3",marginLeft:"2rem",top:"3rem",position:"relative",fontSize:"18px" }}>未通过系统报名培训的学员列表</span>
 					 <div style={{display:this.state.unline.length==0?"none":"block",marginTop:"5rem"}}>
 					 <p className="nyx-resit-name" style={{width:"80px",marginLeft:"3rem"}}>姓名</p>
 					 <p className="nyx-resit-name" style={{width:"150px"}}>科目</p>
@@ -848,6 +935,7 @@ class Resit extends Component {
 						
 						})}
 					 </div>
+					 </div>:""}
 					
 					</div>
 					</Drawer>
