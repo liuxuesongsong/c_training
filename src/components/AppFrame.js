@@ -1030,18 +1030,28 @@ style={{
                 </TabContainer>
               </SwipeableViews>
               <div className="nyx-notice-login nyx-display-none">
-                <h3 style={{ color: "#FFFFFF" }}>特别提醒</h3>
+                {/* <h3 style={{ color: "#FFFFFF" }}>特别提醒</h3>
                 <div className="nyx-login-window-acctention">
                   已经做过临时登记的企业用户以公司全称和初始密码进行登录
               </div>
                 <div className="nyx-login-window-acctention">
                   未做过临时登记的企业用户以公司全称进行注册
+              </div> */}
+              <h3 style={{ color: "#FFFFFF" }}>联系电话</h3>
+              <div className="nyx-login-window-acctention">
+               中软培训：010-51527242/51527581
+              </div>
+              <div className="nyx-login-window-acctention">
+                北京赛迪：010-88559217/88559355
+              </div>
+              <div className="nyx-login-window-acctention">
+                广州赛宝：020-87237821/87236251
               </div>
                 <div className="nyx-login-window-acctention">
-                  系统维护电话：010-51527580
+                  系统维护：010-51527580
               </div>
-              <a href="http://www.csst.com.cn/uploadfile/doc/csi-Q&Av2.pdf" target="view_window" className="nyx-instructions">常见问题与回答<i className="glyphicon glyphicon-question-sign nyx-instructions-glyphicon"></i></a>
-              <a href="http://www.csst.com.cn/uploadfile/doc/csi-01.pdf" target="view_window" className="nyx-instructions">填报说明<i className="glyphicon glyphicon-info-sign nyx-instructions-glyphicon"></i></a>
+              {/* <a href="http://www.csst.com.cn/uploadfile/doc/csi-Q&Av2.pdf" target="view_window" className="nyx-instructions">常见问题与回答<i className="glyphicon glyphicon-question-sign nyx-instructions-glyphicon"></i></a>
+              <a href="http://www.csst.com.cn/uploadfile/doc/csi-01.pdf" target="view_window" className="nyx-instructions">填报说明<i className="glyphicon glyphicon-info-sign nyx-instructions-glyphicon"></i></a> */}
               </div>
             </div> 
         </div>
@@ -1090,9 +1100,10 @@ style={{
             </ul>
            </div>
            <div className="nyx-login-select">
+           <div style={{float:"right",width:"300px",marginRight:"45px",height:"220px"}}>
            <div
-          className="nyx-login-select-button"
-          style={{paddingLeft:0}}
+         className="nyx-login-select-button"
+          style={{paddingLeft:0,height:"150px"}}
           onClick={()=>{
           //  sessionStorage.classify=2;
           //   this.context.router.push("/com/home");
@@ -1103,6 +1114,12 @@ style={{
             <span style={{fontSize:"18px",float:"right",lineHeight:"30px",paddingLeft:"30px"}}>即将上线<div className="nyx-login-select-img"></div></span>
             
           </div>
+          <div style={{float:"left",width:"290px"}}>
+            <a className="nyx-instructions">常见问题与回答<i className="glyphicon glyphicon-question-sign nyx-instructions-glyphicon"></i></a>
+              <a className="nyx-instructions">填报说明<i className="glyphicon glyphicon-info-sign nyx-instructions-glyphicon"></i></a>
+            </div>
+           </div>
+           <div style={{float:"right",width:"300px",marginRight:"45px",height:"220px"}}>
            <div
            className="nyx-login-select-button"
            
@@ -1130,16 +1147,21 @@ style={{
           </span>
           
          <span style={{fontSize:"18px",float:"right",lineHeight:"30px"}}>报名入口<div className="nyx-login-select-img"></div></span>
-          
+            
           </div>
-          
+           <div style={{float:"left",width:"290px"}}>
+           <a href="http://www.csst.com.cn/uploadfile/doc/csi-Q&Av2.pdf" target="view_window" className="nyx-instructions">常见问题与回答<i className="glyphicon glyphicon-question-sign nyx-instructions-glyphicon"></i></a>
+              <a href="http://www.csst.com.cn/uploadfile/doc/csi-01.pdf" target="view_window" className="nyx-instructions">填报说明<i className="glyphicon glyphicon-info-sign nyx-instructions-glyphicon"></i></a>
+           </div>
+          </div>
           <div className="nyx-login-select_v">
-             版本编号:V1.200<br/>
+             版本编号:V1.202<br/>
              开发自:<br/>
              项目管理人员培训工作组<br/>
              系统维护电话:<br/>010-51527580
            </div>
            </div>
+           
            <div style={{clear:"both"}}></div>
         </div>:sessionStorage.classify==1?<div className={classes.appFrame}>
        {/* //运维修改 */}

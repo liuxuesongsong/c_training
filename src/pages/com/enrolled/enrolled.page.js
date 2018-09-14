@@ -1514,12 +1514,12 @@ class Enrolled extends Component {
 				{/* 运维修改 */}
 				{sessionStorage.classify==1?
 				<div>
-					{/* <div className={'nyx-tips nyx-display-none'}><p>{"【已临时登记的项目经理】" +
+					<div className={'nyx-tips nyx-display-none'}><p>{"【已临时登记的项目经理】" +
 				"第一步：请在下表中点击【修改】补充完整人员信息。" +
 				"第二步：点击【报名】进行培训报名"}</p>
 				<p style={{marginLeft:"0.4rem"}}>{"特别提醒:在“报名”提交前必须填完“企业相关信息”。"}</p>
-				</div> */}
-				{/* <Paper className={'nyx-paper nyx-enroller-paper'}>
+				</div>
+				<Paper className={'nyx-paper nyx-enroller-paper'}>
 				<List style={{ padding: 0 }}>
 				<div style={{  color:"#2196F3", marginBottom: "1rem", position: "relative" }} className="nyx-head-name">
 				{"已临时登记的报名人员信息及管理"} <i
@@ -1587,14 +1587,14 @@ class Enrolled extends Component {
 					)}
 					</div>
 			</List>
-			</Paper> */}
-			{/* <div className={'nyx-tips nyx-display-none'}>
+			</Paper>
+			<div className={'nyx-tips nyx-display-none'}>
 			{"【未临时登记的项目经理】" +
 			"第一步：请在下表中点击【添加】新增人员，输入完整信息。" +
 			"第二步：点击【报名】进行报名"
 			}
 			<p style={{marginLeft:"0.4rem"}}>{"特别提醒:在“报名”提交前必须填完“企业相关信息”。"}</p>
-			</div> */}
+			</div>
 			{/* 运维修改 */}
 				</div>:""}
 			<Paper className={'nyx-paper nyx-enroller-paper'}>

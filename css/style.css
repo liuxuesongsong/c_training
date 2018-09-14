@@ -1707,6 +1707,7 @@ position: absolute;
 .nyx-card {
   width: 100%;
   font-size: 12px;
+  height: 32px;
   padding: 0.3rem 0.5rem 0 0.7rem;
 }
 
