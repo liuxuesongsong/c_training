@@ -193,7 +193,7 @@ class AppFrame extends Component {
     //document.getElementById("code_img").src=getRouter(CHECK_CODE).url;
     // this.get_check_code();
     if (!sessionStorage.logged || sessionStorage.logged === false) {
-      this.context.router.push("/");
+       this.context.router.push("/");
 
     } else {
       switch (Number(sessionStorage.apptype)) {
@@ -958,7 +958,7 @@ style={{
   loginNoticeDialog = () => {
     return (
         <Dialog  open={this.state.openloginNoticeDialog} onRequestClose={this.handleRequestClose} >
-            <DialogTitle >
+            {/* <DialogTitle >
                <div style = {{color:"rgba(0,0,0,0.54)"}}>
                平台通知
                </div>
@@ -970,6 +970,17 @@ style={{
               <li><span>02.</span>{Lang[window.Lang].pages.main.notice_two}</li>
               <li><span>03.</span>{Lang[window.Lang].pages.main.notice_three}</li>
               <li><span>04.</span>{Lang[window.Lang].pages.main.notice_four}</li>
+            </ul>
+            </DialogContent> */}
+            <DialogTitle >
+               <div style = {{color:"rgba(0,0,0,0.54)"}}>
+               通知
+               </div>
+            </DialogTitle>
+            <DialogContent>
+            <ul style={{width:"880px"}} className="nyx-login-select_list_Dialog">
+            <li  style={{textIndent:"36px",lineHeight:"2"}}>鉴于信息系统集成及服务行业项目管理人员的业务管理及调整的需要，项目管理人员培训报名自发布通知之日起暂停网上培训报名。</li>
+            <li style={{textAlign:"right",marginTop:"3rem"}}> 2018年10月19日</li>
             </ul>
             </DialogContent>
             <DialogActions>
@@ -1002,9 +1013,10 @@ style={{
   LoginTable = () => {
     return <div className={'nyx-login-bg'}>
       <div className={'nyx-login'}>
-      {/* <h1 style={{color:"#fff"}}>信息系统集成及项目管理人员,系统正在维护中。(维护时间:2018.06.21 18:00-2018.06.22 06:30)</h1>
-       */}
-        <div className={'nyx-login-window'}>
+      
+        <div 
+        // style={{backgroundColor:"transparent",boxShadow:"none"}} 
+        className={'nyx-login-window'}>
             <div>
               <AppBar position="static" color="default">
                 <Tabs
@@ -1029,14 +1041,13 @@ style={{
                   {this.RegisterView()}
                 </TabContainer>
               </SwipeableViews>
-              <div className="nyx-notice-login nyx-display-none">
-                {/* <h3 style={{ color: "#FFFFFF" }}>特别提醒</h3>
-                <div className="nyx-login-window-acctention">
-                  已经做过临时登记的企业用户以公司全称和初始密码进行登录
-              </div>
-                <div className="nyx-login-window-acctention">
-                  未做过临时登记的企业用户以公司全称进行注册
+              {/* <div style={{color:"#fff",}}>
+                <p style={{fontWeight:"500",fontSize:"1.8rem"}}>通知</p>
+                <p style={{fontSize:"1.2rem",textIndent:"38px",lineHeight:"2"}}>鉴于信息系统集成及服务行业项目管理人员的业务管理及调整的需要，项目管理人员培训报名自发布通知之日起暂停网上培训报名。</p>
+                <p style={{fontSize:"1.2rem",textAlign:"right"}}>2018年10月19日</p>
               </div> */}
+              <div style={{top:"-193px"}} className="nyx-notice-login nyx-display-none">
+               
               <h3 style={{ color: "#FFFFFF" }}>联系电话</h3>
               <div className="nyx-login-window-acctention">
                中软培训：010-51527242/51527581
@@ -1050,8 +1061,6 @@ style={{
                 <div className="nyx-login-window-acctention">
                   系统维护：010-51527580
               </div>
-              {/* <a href="http://www.csst.com.cn/uploadfile/doc/csi-Q&Av2.pdf" target="view_window" className="nyx-instructions">常见问题与回答<i className="glyphicon glyphicon-question-sign nyx-instructions-glyphicon"></i></a>
-              <a href="http://www.csst.com.cn/uploadfile/doc/csi-01.pdf" target="view_window" className="nyx-instructions">填报说明<i className="glyphicon glyphicon-info-sign nyx-instructions-glyphicon"></i></a> */}
               </div>
             </div> 
         </div>
@@ -1090,13 +1099,20 @@ style={{
              <div className="nyx-login-select-title">系统集成项目管理人员学习平台</div>
            </div>
            <div className="nyx-login-select">
-            <ul className="nyx-login-select_list">
+            {/* <ul className="nyx-login-select_list">
               <li style={{fontSize:"24px",paddingBottom:"1rem"}}>平台通知</li>
               <li><span>01.</span>{Lang[window.Lang].pages.main.notice_one}
               <a style={{fontSize:"18px",color:"#4aa8ae"}} target="view_window" href="http://www.csi-s.org.cn/miitnew_webmap/miitnew_pmbzgf/2015/07/17/1778896c187945e08b3effb9fcd7bc76.html"> 查看原文</a></li>
               <li><span>02.</span>{Lang[window.Lang].pages.main.notice_two}</li>
               <li><span>03.</span>{Lang[window.Lang].pages.main.notice_three}</li>
               <li><span>04.</span>{Lang[window.Lang].pages.main.notice_four}</li>
+            </ul> */}
+            <ul style={{width:"890px"}} className="nyx-login-select_list">
+              <li style={{fontSize:"24px",paddingBottom:"1rem"}}>通知</li>
+              <li style={{textIndent:"36px",lineHeight:"2"}}>鉴于信息系统集成及服务行业项目管理人员的业务管理及调整的需要，项目管理人员培训报名自发布通知之日起暂停网上培训报名。</li>
+              <li style={{textAlign:"right",marginTop:"3rem"}}> 2018年10月19日</li>
+              {/* <li><span>03.</span>{Lang[window.Lang].pages.main.notice_three}</li>
+              <li><span>04.</span>{Lang[window.Lang].pages.main.notice_four}</li> */}
             </ul>
            </div>
            <div className="nyx-login-select">
@@ -1146,7 +1162,7 @@ style={{
           项目经理
           </span>
           
-         <span style={{fontSize:"18px",float:"right",lineHeight:"30px"}}>报名入口<div className="nyx-login-select-img"></div></span>
+         <span style={{fontSize:"18px",float:"right",lineHeight:"30px"}}>暂停报名 <div className="nyx-login-select-img"></div></span>
             
           </div>
            <div style={{float:"left",width:"290px"}}>

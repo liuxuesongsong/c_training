@@ -1514,12 +1514,12 @@ class Enrolled extends Component {
 				{/* 运维修改 */}
 				{sessionStorage.classify==1?
 				<div>
-					<div className={'nyx-tips nyx-display-none'}><p>{"【已临时登记的项目经理】" +
+					{/* <div className={'nyx-tips nyx-display-none'}><p>{"【已临时登记的项目经理】" +
 				"第一步：请在下表中点击【修改】补充完整人员信息。" +
 				"第二步：点击【报名】进行培训报名"}</p>
 				<p style={{marginLeft:"0.4rem"}}>{"特别提醒:在“报名”提交前必须填完“企业相关信息”。"}</p>
-				</div>
-				<Paper className={'nyx-paper nyx-enroller-paper'}>
+				</div> */}
+				{/* <Paper className={'nyx-paper nyx-enroller-paper'}>
 				<List style={{ padding: 0 }}>
 				<div style={{  color:"#2196F3", marginBottom: "1rem", position: "relative" }} className="nyx-head-name">
 				{"已临时登记的报名人员信息及管理"} <i
@@ -1568,6 +1568,7 @@ class Enrolled extends Component {
 
 					this.popUpNotice(ALERT, 0, "为" + student.name + "报名"+ getCity(student.area_id) + "的"+getCourse(student.course_id)+ "培训班", [
 					() => {
+						console.log(student.id)
 					this.erollStudent(student.id);
 					this.closeNotice();
 					}, () => {
@@ -1587,14 +1588,14 @@ class Enrolled extends Component {
 					)}
 					</div>
 			</List>
-			</Paper>
-			<div className={'nyx-tips nyx-display-none'}>
+			</Paper> */}
+			{/* <div className={'nyx-tips nyx-display-none'}>
 			{"【未临时登记的项目经理】" +
 			"第一步：请在下表中点击【添加】新增人员，输入完整信息。" +
 			"第二步：点击【报名】进行报名"
 			}
 			<p style={{marginLeft:"0.4rem"}}>{"特别提醒:在“报名”提交前必须填完“企业相关信息”。"}</p>
-			</div>
+			</div> */}
 			{/* 运维修改 */}
 				</div>:""}
 			<Paper className={'nyx-paper nyx-enroller-paper'}>
@@ -1632,6 +1633,60 @@ class Enrolled extends Component {
 			</div>
 			<div className={this.state.unenrolled_height ? "nyx-list-paper" : "nyx-list-paper-change"}>
 			{/* 运维修改 */}
+			{this.state.fkStudents.map(student =>
+					<StudentCard
+					type={CARD_TYPE_FK}
+					key={student.id}
+					name={student.name === null ? "" : student.name.toString()}
+					mobile={student.mobile === null ? "" : student.mobile.toString()}
+					email={student.mail === null ? "" : student.mail.toString()}
+					level={Number(student.course_id)}
+					city={Number(student.area_id)}
+					duty={student.duty === null ? "" : student.duty.toString()}
+					department={student.department === null ? "" : student.department.toString()}
+					institution={student.institution === null ? "" : Number(student.institution)}
+					is_inlist={student.is_inlist}
+					action={[() => {
+					this.selectedStudent(student);
+					this.toggleDrawer(true)()
+					}, () => {
+					var info_completed=getCache("info_completed");
+					
+					var info_completed_per=info_completed/20;
+					console.log(info_completed_per);
+					if(info_completed_per<1){
+					this.popUpNotice("alert", 0, '企业相关信息完成'+info_completed_per*100+'%, 请先补全企业相关信息');
+					return
+					}
+					if(student.duty===""||student.department===""||student.mobile===""||student.mail===""){
+					this.popUpNotice("alert", 0, '请先补全报名人员信息');
+					return
+					}
+					this.setState({
+						SignUpStudent:student,
+						openSignUpDialog: true,
+					})
+					this.state.selectedStudentId = student.id;
+
+					// this.popUpNotice(ALERT, 0, "为" + student.name + "报名"+ getCity(student.area_id) + "的"+getCourse(student.course_id)+ "培训班", [
+					// () => {
+					// this.erollStudent(student.id);
+					// this.closeNotice();
+					// }, () => {
+					// this.closeNotice();
+					// }]);
+					}, () => {
+					this.state.selected = student;
+					this.popUpNotice(ALERT, 0, "删除学生" + student.name, [
+					() => {
+					this.removeStudent(student.id);
+					this.closeNotice();
+					}, () => {
+					this.closeNotice();
+					}]);
+					}]}>
+					</StudentCard>
+					)}
 			{sessionStorage.classify==1?this.state.newStudents.map(student =>
 			
 			//{/* 运维修改 */} {this.state.newStudents.map(student =>

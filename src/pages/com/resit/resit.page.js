@@ -131,6 +131,7 @@ class Resit extends Component {
 		check_resit_area_id:"",
 		check_resit_identity_card:"",
 		check_resit_id:"",
+		resit_area_id:"",
 		check_resit_register:""
 		
 	};
@@ -167,14 +168,16 @@ class Resit extends Component {
 			});
 		}
 	}
-	resit_student = (id) => {
+	resit_student = (id,area_id) => {
+		console.log(area_id)
 		var cb = (route, message, arg) => {
 			if (message.code === Code.LOGIC_SUCCESS) {
+				this.closeNotice();
 				this.fresh();
 			}
 			this.popUpNotice(NOTICE, 0, message.msg);
 		}
-		getData(getRouter(RESIT_REG), { session: sessionStorage.session, user_ids: id }, cb, { });
+		getData(getRouter(RESIT_REG), { session: sessionStorage.session, user_ids: id,area_id:area_id }, cb, { });
 	}
 	//获取线下详细信息并效验是否重复报名
 	gain_online_infos=(id)=>{
@@ -535,8 +538,9 @@ class Resit extends Component {
                                 	
 									<Button style={{ position: "absolute", right: "28px", top: "0" }} fab color="primary" aria-label="add" className={'nyx-paper-header-btn'}
                                         onClick={() => {
+											
                                             this.resitDrawer(true)()
-                                        
+                                           
                                         }}
                                         >
                                         {"报名"}
@@ -796,12 +800,37 @@ class Resit extends Component {
 							color="primary"
 							raised 
 							onClick={() => {
-								this.popUpNotice(ALERT, 0, resit_student.name+"报名参加补考", [
+								this.setState({
+									resit_area_id: ""
+								})
+								console.log("baomingbukao")
+								this.popUpNotice(ALERT, 0,<div style={{width:"25rem"}}><div style ={{textAlign:"center",fontWeight:"800",fontSize:"20px",color:"rgb(33,150,243)"}}>{ resit_student.name+"报名参加补考"}</div><div className="nyx-info-select-div">
+								<p className="nyx-info-select-label">请选择补考城市</p>
+								<select
+								className="nyx-card-enrroll-select-lg"
+								id="resit_area_id"
+								defaultValue={resit_student.area_id}
+								onChange={(e) => {
+									
+								//this.state.c_area_id = Number(e.target.value);
+								this.setState({
+									resit_area_id: e.target.value
+								});
+								}}
+								label={Lang[window.Lang].pages.org.clazz.info.area}
+								>
+								
+								 {getAreas().map(area => {
+														return <option key={area.id} value={area.id}>{area.area_name}</option>
+													})}
+								</select>
+								</div></div>, [
 									() => {
+									console.log("heihhhhh")
 										this.state.resitStudent=[];
 										this.state.resitStudent.push(resit_student.id)
-										this.resit_student(this.state.resitStudent);
-										this.closeNotice();
+										this.resit_student(this.state.resitStudent,this.state.resit_area_id===""?resit_student.area_id:this.state.resit_area_id);
+										
 									}, () => {
 										this.closeNotice();
 									}]);  

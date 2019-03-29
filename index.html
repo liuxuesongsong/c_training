@@ -171,9 +171,7 @@
           console.log("Chrome");
           var regStr_chrome = /chrome\/[\d.]+/gi;
           var chrome_browser = explorer.match(regStr_chrome)[0].split("/")[1];
-          // console.log(chrome_browser);
           if (chrome_browser < "42") {
-            // console.log(chrome_browser)
             document.getElementById("change_browser").innerHTML = change_browser;
 
           }
@@ -182,7 +180,6 @@
         else if (explorer.indexOf("Opera") >= 0) {
           var regStr_opera = /opera\/[\d.]+/gi;
           var opera_browser = explorer.match(regStr_opera)[0].split("/")[1];
-          // console.log(chrome_browser);
           if (opera_browser < "29") {
             document.getElementById("change_browser").innerHTML = change_browser;
 
